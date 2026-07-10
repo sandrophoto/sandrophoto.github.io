@@ -82,8 +82,6 @@
   .app:hover .go{color:#cfe0ff}
   .app .go .arrow{transition:transform .25s}
   .app:hover .go .arrow{transform:translateX(4px)}
-  .app.soon{cursor:default}
-  .app.soon .go{color:#5af08b}
 
   footer{padding:50px 0;border-top:1px solid rgba(255,255,255,.07);text-align:center;color:var(--muted);font-size:14px}
   .studio{font-weight:900;font-size:17px;background:linear-gradient(100deg,var(--hot),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -128,7 +126,7 @@
 
 <script>
   const apps=[
-    {e:"📵",n:"AFK Pro Plus 3000",t:"iPhone · Bien-être",d:"Pose ton téléphone. Quand tu le reprends, il te dit combien de temps tu étais dans la vraie vie — et te récompense. La nuit ne compte pas.",u:"#top",i:"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='24'%20fill='%23050505'/%3E%3Ctext%20x='28'%20y='62'%20font-family='monospace'%20font-size='30'%20fill='%23f4f4f4'%3Eafk%3C/text%3E%3Ccircle%20cx='74'%20cy='58'%20r='5'%20fill='%235af08b'/%3E%3C/svg%3E",g:"Bientôt sur l'App Store",soon:true},
+    {e:"📵",n:"AFK Pro Plus 3000",t:"iPhone · Bien-être",d:"Pose ton téléphone. Quand tu le reprends, il te dit combien de temps tu étais dans la vraie vie — et te récompense. La nuit ne compte pas.",u:"https://sandrophoto.github.io/afk-pro-plus-3000/",i:"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='24'%20fill='%23050505'/%3E%3Ctext%20x='28'%20y='62'%20font-family='monospace'%20font-size='30'%20fill='%23f4f4f4'%3Eafk%3C/text%3E%3Ccircle%20cx='74'%20cy='58'%20r='5'%20fill='%235af08b'/%3E%3C/svg%3E",g:"Découvrir"},
     {e:"🙂",n:"IFEEL",t:"iPhone · Humeur",d:"Note ton humeur jour après jour. Calendrier d'émotions, météo, lune — 100% privé, sur ton iPhone.",u:"https://sandrophoto.github.io/ifeel/",i:"https://sandrophoto.github.io/ifeel/icon.png",g:"Découvrir"},
     {e:"🧲",n:"Torrent DL Pro Plus 3000",t:"Torrents",d:"Collez un magnet ou un .torrent — moteur aria2 embarqué, universel.",u:"https://sandrophoto.github.io/torrentdl/",i:"https://sandrophoto.github.io/torrentdl/icon.png",g:"Découvrir"},
     {e:"🎙️",n:"BlaBlaSpy Pro Plus 3000",t:"Réunions",d:"Enregistre, transcrit et résume tes réunions Teams/Meet/Zoom, en local.",u:"https://sandrophoto.github.io/blablaspy/",i:"https://sandrophoto.github.io/blablaspy/icon.png",g:"Découvrir"},
@@ -140,11 +138,10 @@
   ];
   const grid=document.getElementById('grid');
   apps.forEach(a=>{
-    const el=document.createElement(a.soon?'div':'a');
-    el.className='app reveal'+(a.soon?' soon':'');
-    if(!a.soon){el.href=a.u;el.target='_blank';el.rel='noopener';}
+    const el=document.createElement('a');
+    el.className='app reveal';el.href=a.u;el.target='_blank';el.rel='noopener';
     el.innerHTML=`<div class="head"><div class="emoji">${a.i?'<img src="'+a.i+'" alt="'+a.n+'">':a.e}</div><div><div class="tag">${a.t}</div><h3>${a.n}</h3></div></div>
-      <p>${a.d}</p><span class="go">${a.g}${a.soon?'':' <span class="arrow">→</span>'}</span>`;
+      <p>${a.d}</p><span class="go">${a.g} <span class="arrow">→</span></span>`;
     el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();
       el.style.setProperty('--mx',(e.clientX-r.left)+'px');el.style.setProperty('--my',(e.clientY-r.top)+'px');});
     grid.appendChild(el);

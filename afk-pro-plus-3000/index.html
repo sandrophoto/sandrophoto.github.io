@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AFK Pro Plus 3000 — STUPIDS STUDIO</title>
+<meta name="description" content="Pose ton téléphone. Quand tu le reprends, il te dit combien de temps tu étais dans la vraie vie — et te récompense. La nuit ne compte pas.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23050505'/%3E%3Ctext x='28' y='62' font-family='monospace' font-size='30' fill='%23f4f4f4'%3Eafk%3C/text%3E%3Ccircle cx='74' cy='58' r='5' fill='%235af08b'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --afk:#5af08b;--afk2:#2fb56a;
+    --ink:#eaf0ff;--muted:#9fb0d6;--glass:rgba(255,255,255,.055);--glass-bd:rgba(255,255,255,.12);--bg:#05070f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,system-ui,sans-serif;
+    background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  .bg{position:fixed;inset:0;z-index:-3;overflow:hidden;background:
+      radial-gradient(1200px 800px at 70% -10%,rgba(30,140,80,.22),transparent 60%),
+      radial-gradient(900px 700px at 10% 110%,rgba(40,120,90,.20),transparent 60%),var(--bg)}
+  .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.5;mix-blend-mode:screen;will-change:transform}
+  .b1{width:46vw;height:46vw;left:-8vw;top:-6vw;background:radial-gradient(circle,#1fae63,transparent 70%);animation:d1 22s ease-in-out infinite}
+  .b2{width:40vw;height:40vw;right:-6vw;top:8vh;background:radial-gradient(circle,#37d98a,transparent 70%);animation:d2 26s ease-in-out infinite}
+  @keyframes d1{50%{transform:translate(8vw,6vh) scale(1.15)}}
+  @keyframes d2{50%{transform:translate(-7vw,10vh) scale(1.1)}}
+  .grid-bg{position:fixed;inset:0;z-index:-2;
+    background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:54px 54px;mask-image:radial-gradient(circle at 50% 20%,#000,transparent 75%)}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(8,11,22,.55);border-bottom:1px solid rgba(255,255,255,.07)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .back{display:flex;align-items:center;gap:9px;font-weight:700;color:var(--muted);transition:.25s}
+  .back:hover{color:#fff}
+  .nav-cta{font-size:14px;color:var(--muted);padding:8px 14px;border:1px solid var(--glass-bd);border-radius:10px;transition:.25s}
+  .nav-cta:hover{color:#fff;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.05)}
+
+  .hero{text-align:center;padding:74px 0 40px}
+  .appicon{width:112px;height:112px;margin:0 auto 26px;border-radius:26px;position:relative;
+    box-shadow:0 30px 70px rgba(20,60,40,.6),0 0 0 1px rgba(255,255,255,.08) inset;animation:float 6s ease-in-out infinite}
+  .appicon img{width:100%;height:100%;border-radius:26px}
+  .appicon::after{content:"";position:absolute;inset:-26px;border-radius:50%;z-index:-1;
+    background:radial-gradient(circle,rgba(90,240,139,.4),transparent 70%);filter:blur(12px);animation:pulse 4.5s ease-in-out infinite}
+  @keyframes float{50%{transform:translateY(-12px)}}
+  @keyframes pulse{50%{transform:scale(1.18);opacity:.75}}
+  h1{font-size:clamp(34px,6.5vw,66px);font-weight:900;letter-spacing:-2px;line-height:1}
+  h1 .grad{background:linear-gradient(100deg,#baffd6,var(--afk) 55%,#25c97a);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin:20px auto 0;max-width:600px;font-size:clamp(16px,2.2vw,20px);color:var(--muted)}
+  .badge{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:9px 18px;border-radius:999px;
+    font-size:14px;font-weight:700;color:#0a1f14;background:linear-gradient(135deg,var(--afk),var(--afk2));
+    box-shadow:0 10px 30px rgba(47,181,106,.35)}
+  .chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+  .chip{font-size:13px;color:#d3ffe6;padding:7px 14px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-bd);backdrop-filter:blur(8px)}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  .shots{display:flex;gap:22px;justify-content:center;align-items:flex-end;flex-wrap:wrap;padding:40px 0 20px}
+  .shot{width:min(260px,72vw);border-radius:30px;overflow:hidden;border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 30px 70px rgba(0,0,0,.5)}
+  .shot.mid{transform:translateY(-22px)}
+  @media(max-width:720px){.shot.mid{transform:none}}
+
+  .sec{padding:56px 0}
+  .eyebrow{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:#6fd7a1;text-align:center}
+  .h2{font-size:clamp(24px,4.5vw,38px);font-weight:800;text-align:center;margin:10px 0 40px;letter-spacing:-1px}
+  .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+  .feat{padding:24px;border-radius:18px;background:var(--glass);border:1px solid var(--glass-bd);backdrop-filter:blur(12px)}
+  .feat .ic{font-size:28px;margin-bottom:12px}
+  .feat h3{font-size:17px;margin-bottom:7px}
+  .feat p{font-size:14px;color:var(--muted)}
+
+  .how{max-width:720px;margin:0 auto;text-align:center;color:var(--muted);font-size:15.5px}
+  .how b{color:var(--ink)}
+
+  footer{padding:50px 0;border-top:1px solid rgba(255,255,255,.07);text-align:center;color:var(--muted);font-size:14px;margin-top:30px}
+  .studio{font-weight:900;font-size:16px;background:linear-gradient(100deg,var(--afk),#baffd6);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .flinks{display:flex;gap:18px;justify-content:center;margin:14px 0}
+  .flinks a:hover{color:#fff}
+</style>
+</head>
+<body>
+  <div class="bg"><div class="blob b1"></div><div class="blob b2"></div></div>
+  <div class="grid-bg"></div>
+
+  <nav><div class="wrap nav-in">
+    <a class="back" href="https://sandrophoto.github.io/">← STUPIDS&nbsp;STUDIO</a>
+    <a class="nav-cta" href="https://sandrophoto.github.io/" target="_self">Toutes les apps</a>
+  </div></nav>
+
+  <header class="hero wrap">
+    <div class="appicon"><img src="icon.png" alt="Icône AFK Pro Plus 3000"></div>
+    <h1>AFK <span class="grad">Pro Plus 3000</span></h1>
+    <p class="sub">Pose ton téléphone. Quand tu le reprends, il te dit combien de temps tu étais <b>dans la vraie vie</b> — et te récompense. La nuit ne compte pas.</p>
+    <div class="badge">🍏 Bientôt sur l'App Store</div>
+    <div class="chips">
+      <span class="chip">iPhone · iOS 17+</span>
+      <span class="chip">Temps d'écran</span>
+      <span class="chip">Français · English · Slovenščina</span>
+      <span class="chip">Aucune donnée collectée</span>
+    </div>
+  </header>
+
+  <section class="shots wrap">
+    <img class="shot reveal" src="rewards.png" alt="Collection de récompenses" loading="lazy">
+    <img class="shot mid reveal" src="celebration.png" alt="Célébration d'une récompense" loading="lazy">
+    <img class="shot reveal" src="home.png" alt="Écran principal" loading="lazy">
+  </section>
+
+  <section class="sec wrap">
+    <p class="eyebrow reveal">Ce que ça fait</p>
+    <h2 class="h2 reveal">Récompense l'absence, pas l'usage</h2>
+    <div class="feats">
+      <div class="feat reveal"><div class="ic">🏆</div><h3>Des récompenses à collectionner</h3><p>Dès 10 minutes : ✨ Étincelle, 🍃 Bouffée d'air, 🏆 Vraie Vie, 🌍 Explorateur, 👑 Légende AFK. Chacune avec sa célébration animée.</p></div>
+      <div class="feat reveal"><div class="ic">🔔</div><h3>Automatique</h3><p>Grâce à Temps d'écran, une notification arrive pile quand tu reprends ton téléphone après une vraie pause. Rien à ouvrir.</p></div>
+      <div class="feat reveal"><div class="ic">🌙</div><h3>La nuit ne compte pas</h3><p>Le sommeil n'est pas un exploit : les heures calmes sont exclues, et une pause qui traverse la nuit repart au matin.</p></div>
+      <div class="feat reveal"><div class="ic">📵</div><h3>Mode Table</h3><p>Pose le téléphone face contre la table : le décompte démarre tout seul, l'écran s'éteint, et s'arrête quand tu le relèves.</p></div>
+      <div class="feat reveal"><div class="ic">⏱️</div><h3>Widget en direct</h3><p>Sur l'écran verrouillé et l'accueil : « dans la vraie vie depuis 2 h 34 », qui tourne tout seul.</p></div>
+      <div class="feat reveal"><div class="ic">🔒</div><h3>100 % privé</h3><p>Aucune donnée collectée, aucun compte, aucun serveur. Tout reste sur ton iPhone.</p></div>
+    </div>
+  </section>
+
+  <section class="sec wrap">
+    <p class="eyebrow reveal">Comment ça marche</p>
+    <h2 class="h2 reveal">Une idée simple</h2>
+    <p class="how reveal">Tu poses le téléphone et tu vis. Quand l'écran se rallume après une longue absence, AFK te <b>félicite</b> pour le temps passé loin des écrans — un petit rappel que la vraie vie continue pendant que le téléphone dort. <b>Super simple.</b></p>
+  </section>
+
+  <footer><div class="wrap">
+    <div class="studio">STUPIDS STUDIO</div>
+    <div class="flinks">
+      <a href="https://sandrophoto.github.io/">Toutes les apps</a>
+      <a href="https://github.com/sandrophoto" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://stupidstudio.eu" target="_blank" rel="noopener">stupidstudio.eu</a>
+    </div>
+    <div>© 2026 STUPIDS STUDIO — Tous droits réservés.</div>
+  </div></footer>
+
+<script>
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3*70)+'ms';io.observe(el)});
+</script>
+</body>
+</html>
