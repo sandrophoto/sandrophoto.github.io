@@ -21,4 +21,4 @@ Des apps qui font une chose — **très bien**. Légères, autonomes, mises à j
 
 ---
 
-© 2026 STUPIDS STUDIO — [GitHub](https://github.com/sandrophoto) · [stupidstudio.eu](https://stupidstudio.eu)
+© 2026 STUPIDS STUDIO — [GitHub](https://github.com/sandrophoto) · [Le studio](https://sandrophoto.github.io/#studio)
