@@ -136,6 +136,38 @@ h2{font-size:clamp(30px,4.4vw,54px);font-weight:900;line-height:.98;letter-spaci
 .studio{display:grid;grid-template-columns:1fr;gap:36px}
 @media(min-width:880px){.studio{grid-template-columns:.75fr 1.25fr;gap:60px}}
 .studio p{font-size:16px;line-height:1.62;color:#2b2b2b;margin-bottom:18px;max-width:62ch}
+.studio .big{font-size:20px;line-height:1.5;color:var(--ink);font-weight:500;max-width:56ch}
+
+/* les deux potes — aplats, un filet en tête, aucune carte */
+.duo{display:grid;grid-template-columns:1fr;gap:0 44px;margin-top:56px}
+@media(min-width:660px){.duo{grid-template-columns:1fr 1fr}}
+.duo .who{padding:22px 0 26px;border-top:2px solid var(--ink)}
+.duo .n{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--blue);margin-bottom:14px}
+.duo h3{font-size:30px;font-weight:900;letter-spacing:-.03em;line-height:1;margin-bottom:8px}
+.duo .role{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:#3a3a3a}
+.duo .bar{height:4px;width:0;background:var(--red);margin-top:16px;transition:width .35s var(--ease)}
+.duo .who:hover .bar{width:52px}
+.duo .who:nth-child(2) .n{color:var(--red)}
+.duo .who:nth-child(2) .bar{background:var(--blue)}
+
+/* ce qu'on refuse — une liste qui se barre elle-même */
+.no{margin-top:56px}
+.no ul{list-style:none;margin-top:8px}
+.no li{font-size:clamp(22px,3.2vw,34px);font-weight:900;letter-spacing:-.03em;line-height:1.25;
+  padding:10px 0;position:relative;display:inline-block;width:100%}
+.no li span{position:relative;display:inline}
+/* le trait qui raye : il se tire au survol, et à la révélation au scroll */
+.no li span::after{content:"";position:absolute;left:0;top:52%;height:5px;width:0;background:var(--red);
+  transition:width .45s var(--ease)}
+.no li:hover span::after,.no li.struck span::after{width:100%}
+
+/* la vision — un aplat, pas un cadre */
+.vision{background:var(--ink);color:var(--paper);padding:56px 32px;margin-top:64px;position:relative;overflow:hidden}
+.vision .ci2{position:absolute;top:-60px;right:-40px;width:200px;height:200px;border-radius:50%;
+  background:var(--blue);animation:bob 10s ease-in-out infinite}
+.vision .in{position:relative;z-index:2;max-width:62ch}
+.vision .k{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--yellow);margin-bottom:16px}
+.vision p{font-size:clamp(19px,2.4vw,26px);line-height:1.4;font-weight:500;color:var(--paper)}
 
 /* ---------- PRINCIPES — gros chiffres, aucune carte ---------- */
 .princ{display:grid;grid-template-columns:1fr;gap:38px 44px}
@@ -220,14 +252,50 @@ footer .mail:hover{border-color:var(--yellow)}
   <section id="studio" class="wrap" style="padding-top:0">
     <div class="sec-head">
       <p class="eyebrow rv" style="color:var(--blue)">LE STUDIO</p>
-      <p class="note rv">Deux personnes, zéro réunion.</p>
+      <p class="note rv">Théo &amp; Sandro — amis depuis 2008.</p>
     </div>
     <div class="studio">
-      <h2 class="rv">Deux.<br>Exprès.</h2>
+      <h2 class="rv">Un rêve<br>de potes.</h2>
       <div>
-        <p class="rv">STUPIDS STUDIO, c'est deux personnes qui écrivent des apps macOS et iOS. Pas de levée de fonds, pas de feuille de route, pas de tableau de bord d'engagement. Une app sort quand elle est prête, et pas avant.</p>
-        <p class="rv">Tout ce qu'on fabrique tourne sur ta machine. Pas de serveur, pas de compte à créer, pas de télémétrie. Les outils en ligne de commande dont les apps ont besoin — aria2, yt-dlp, ffmpeg — sont embarqués dans le bundle : tu télécharges, tu ouvres, ça marche. Les binaires sont universels et signés, et les mises à jour arrivent toutes seules via Sparkle.</p>
-        <p class="rv">La partie la plus longue du travail, c'est de dire non. Chaque réglage qu'on n'ajoute pas est un réglage que tu n'auras pas à comprendre.</p>
+        <p class="big rv">STUPIDS STUDIO, c'est deux amis depuis 2008 qui font des apps. Il n'y a pas de plan de carrière derrière : il y a un rêve de potes, et une longue liste de trucs qu'on trouvait trop compliqués.</p>
+        <p class="rv">On fait ça pour se simplifier la vie. Pour aider. Pour gagner du temps. Pour faire mieux. On se situe quelque part <strong>entre le studio de design et la fabrique de logiciels</strong> — assez près du design pour que ce soit beau, assez près de l'atelier pour que ce soit fini, signé et livré.</p>
+        <p class="rv">Concrètement : tout tourne sur ta machine. Pas de serveur, pas de compte à créer, pas de télémétrie. Les outils dont les apps ont besoin — aria2, yt-dlp, ffmpeg — sont embarqués dans le bundle : tu télécharges, tu ouvres, ça marche. Les binaires sont universels et signés, et les mises à jour arrivent toutes seules.</p>
+      </div>
+    </div>
+
+    <!-- qui on est -->
+    <div class="duo">
+      <div class="who rv">
+        <div class="n">01 / L'INGÉNIEUR</div>
+        <h3>Théo</h3>
+        <p class="role">Celui qui fait tenir tout ça debout.</p>
+        <div class="bar"></div>
+      </div>
+      <div class="who rv">
+        <div class="n">02 / L'AUTRE</div>
+        <h3>Sandro</h3>
+        <p class="role">Fait des trucs avec ses doigts.</p>
+        <div class="bar"></div>
+      </div>
+    </div>
+
+    <!-- ce qu'on refuse -->
+    <div class="no">
+      <p class="eyebrow rv" style="color:var(--red)">CE QU'ON REFUSE</p>
+      <ul>
+        <li class="rv"><span>La complexité inutile.</span></li>
+        <li class="rv"><span>Les abonnements.</span></li>
+        <li class="rv"><span>Le bordel.</span></li>
+        <li class="rv"><span>Ce qui fait tout, mais rien de bien.</span></li>
+      </ul>
+    </div>
+
+    <!-- où on va -->
+    <div class="vision rv">
+      <div class="ci2"></div>
+      <div class="in">
+        <div class="k">DANS TROIS ANS</div>
+        <p>Des bureaux plus grands. Des apps toujours plus belles et plus utiles, qui simplifient encore plus de choses, pour plus de gens.</p>
       </div>
     </div>
   </section>
@@ -328,7 +396,10 @@ function reveal(){
   if(!rvs.length) return;
   rvs=rvs.filter(el=>{
     if(el.getBoundingClientRect().top > innerHeight-80) return true;
-    el.classList.add('in');return false;
+    el.classList.add('in');
+    /* « ce qu'on refuse » : le trait se tire une fois la ligne découverte */
+    if(el.matches('.no li')) setTimeout(()=>el.classList.add('struck'),340);
+    return false;
   });
 }
 addEventListener('scroll',reveal,{passive:true});
