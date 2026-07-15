@@ -5,144 +5,297 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AFK Pro Plus 3000 — STUPIDS STUDIO</title>
 <meta name="description" content="Pose ton téléphone. Quand tu le reprends, il te dit combien de temps tu étais dans la vraie vie — et te récompense. La nuit ne compte pas.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23050505'/%3E%3Ctext x='28' y='62' font-family='monospace' font-size='30' fill='%23f4f4f4'%3Eafk%3C/text%3E%3Ccircle cx='74' cy='58' r='5' fill='%235af08b'/%3E%3C/svg%3E">
+<link rel="icon" href="icon.png">
+<meta property="og:title" content="AFK Pro Plus 3000">
+<meta property="og:description" content="Récompense l'absence, pas l'usage. iPhone, 100% privé.">
+<meta property="og:image" content="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
 <style>
-  :root{
-    --afk:#5af08b;--afk2:#2fb56a;
-    --ink:#eaf0ff;--muted:#9fb0d6;--glass:rgba(255,255,255,.055);--glass-bd:rgba(255,255,255,.12);--bg:#05070f;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,system-ui,sans-serif;
-    background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.5}
-  a{color:inherit;text-decoration:none}
-  img{max-width:100%;display:block}
+:root{
+  --paper:#F2EFE6;--paper-2:#E7E3D6;--ink:#121212;
+  --blue:#2340D4;--red:#E8412A;--yellow:#F7C51E;--white:#fff;
+  --bd:2px solid var(--ink);
+  --sans:"Archivo","Helvetica Neue",Helvetica,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+/* pas d'overflow:hidden ici — ça casserait le position:sticky de la nav */
+.frame{background:var(--paper);margin:10px;border:var(--bd)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px;width:100%}
+.eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.16em}
 
-  .bg{position:fixed;inset:0;z-index:-3;overflow:hidden;background:
-      radial-gradient(1200px 800px at 70% -10%,rgba(30,140,80,.22),transparent 60%),
-      radial-gradient(900px 700px at 10% 110%,rgba(40,120,90,.20),transparent 60%),var(--bg)}
-  .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.5;mix-blend-mode:screen;will-change:transform}
-  .b1{width:46vw;height:46vw;left:-8vw;top:-6vw;background:radial-gradient(circle,#1fae63,transparent 70%);animation:d1 22s ease-in-out infinite}
-  .b2{width:40vw;height:40vw;right:-6vw;top:8vh;background:radial-gradient(circle,#37d98a,transparent 70%);animation:d2 26s ease-in-out infinite}
-  @keyframes d1{50%{transform:translate(8vw,6vh) scale(1.15)}}
-  @keyframes d2{50%{transform:translate(-7vw,10vh) scale(1.1)}}
-  .grid-bg{position:fixed;inset:0;z-index:-2;
-    background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
-    background-size:54px 54px;mask-image:radial-gradient(circle at 50% 20%,#000,transparent 75%)}
+/* ---------- NAV ---------- */
+nav{border-bottom:var(--bd);background:var(--paper);position:sticky;top:0;z-index:60}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px}
+.logo{display:flex;align-items:center;gap:6px;flex:none}
+.logo .sq{width:22px;height:22px;background:var(--red);color:var(--white);font-family:var(--mono);
+  font-size:10px;font-weight:700;display:grid;place-items:center}
+.logo .ci{width:18px;height:18px;border-radius:50%;background:var(--blue)}
+.logo .tr{width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:16px solid var(--red)}
+.logo .rc{width:18px;height:18px;background:var(--yellow)}
+.logo .name{margin-left:8px;font-weight:800;letter-spacing:-.02em;font-size:16px;white-space:nowrap}
+.logo .ci,.logo .tr,.logo .rc{transition:transform .35s var(--ease)}
+.logo:hover .ci{transform:translateY(-4px)}
+.logo:hover .tr{transform:rotate(-15deg)}
+.logo:hover .rc{transform:rotate(45deg)}
+.nav-links{display:none;align-items:center;gap:30px}
+@media(min-width:900px){.nav-links{display:flex}}
+.nav-links a:not(.btn){font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;
+  position:relative;padding:4px 0}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--red);
+  transition:width .28s var(--ease)}
+.nav-links a:not(.btn):hover::after{width:100%}
 
-  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+/* ---------- BOUTONS ---------- */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;
+  text-transform:uppercase;letter-spacing:.1em;padding:13px 20px;border:var(--bd);
+  background:var(--ink);color:var(--paper);cursor:pointer;white-space:nowrap;
+  transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--red)}
+.btn .ar{transition:transform .18s var(--ease)}
+.btn:hover .ar{transform:translateX(4px)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{box-shadow:4px 4px 0 var(--blue)}
+nav .btn{padding:11px 16px}
 
-  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(8,11,22,.55);border-bottom:1px solid rgba(255,255,255,.07)}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;height:62px}
-  .back{display:flex;align-items:center;gap:9px;font-weight:700;color:var(--muted);transition:.25s}
-  .back:hover{color:#fff}
-  .nav-cta{font-size:14px;color:var(--muted);padding:8px 14px;border:1px solid var(--glass-bd);border-radius:10px;transition:.25s}
-  .nav-cta:hover{color:#fff;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.05)}
+/* ---------- HERO ---------- */
+.hero{display:grid;grid-template-columns:1fr;border-bottom:var(--bd)}
+@media(min-width:900px){.hero{grid-template-columns:1.15fr .85fr}}
+.hero-l{padding:60px 32px 54px;max-width:660px;margin-left:auto;width:100%}
+@media(min-width:900px){.hero-l{padding:70px 48px 66px}}
+.hero h1{font-size:clamp(40px,5.6vw,72px);font-weight:900;line-height:.96;letter-spacing:-.035em;margin:22px 0 0}
+.hero .sub{margin-top:24px;font-size:16px;line-height:1.55;max-width:44ch;color:#2b2b2b}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.ver{margin-top:20px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5a5a5a}
+.soon{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;
+  text-transform:uppercase;letter-spacing:.1em;padding:13px 20px;border:var(--bd);background:var(--yellow)}
 
-  .hero{text-align:center;padding:74px 0 40px}
-  .appicon{width:112px;height:112px;margin:0 auto 26px;border-radius:26px;position:relative;
-    box-shadow:0 30px 70px rgba(20,60,40,.6),0 0 0 1px rgba(255,255,255,.08) inset;animation:float 6s ease-in-out infinite}
-  .appicon img{width:100%;height:100%;border-radius:26px}
-  .appicon::after{content:"";position:absolute;inset:-26px;border-radius:50%;z-index:-1;
-    background:radial-gradient(circle,rgba(90,240,139,.4),transparent 70%);filter:blur(12px);animation:pulse 4.5s ease-in-out infinite}
-  @keyframes float{50%{transform:translateY(-12px)}}
-  @keyframes pulse{50%{transform:scale(1.18);opacity:.75}}
-  h1{font-size:clamp(34px,6.5vw,66px);font-weight:900;letter-spacing:-2px;line-height:1}
-  h1 .grad{background:linear-gradient(100deg,#baffd6,var(--afk) 55%,#25c97a);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .sub{margin:20px auto 0;max-width:600px;font-size:clamp(16px,2.2vw,20px);color:var(--muted)}
-  .badge{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:9px 18px;border-radius:999px;
-    font-size:14px;font-weight:700;color:#0a1f14;background:linear-gradient(135deg,var(--afk),var(--afk2));
-    box-shadow:0 10px 30px rgba(47,181,106,.35)}
-  .chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
-  .chip{font-size:13px;color:#d3ffe6;padding:7px 14px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-bd);backdrop-filter:blur(8px)}
+.hero-r{background:var(--blue);position:relative;overflow:hidden;min-height:420px;border-left:var(--bd);
+  display:grid;place-items:center}
+@media(max-width:899px){.hero-r{border-left:0;border-top:var(--bd);min-height:340px}}
+.hero-r .circle{position:absolute;top:-90px;right:-70px;width:280px;height:280px;border-radius:50%;
+  background:var(--yellow);animation:bob 9s ease-in-out infinite}
+/* centré : à gauche il chevaucherait la liste 01/02/03 */
+.hero-r .tri{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:0;
+  border-left:62px solid transparent;border-right:62px solid transparent;border-bottom:104px solid var(--red);
+  animation:slide 11s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(22px)}}
+@keyframes slide{50%{transform:translateX(-50%) translateY(-16px)}}
+.hero-r .icon{position:relative;z-index:2;width:132px;height:132px;border:var(--bd);background:var(--white);
+  display:grid;place-items:center;animation:bob2 7s ease-in-out infinite}
+.hero-r .icon img{width:100%;height:100%;object-fit:cover}
+@keyframes bob2{50%{transform:translateY(-12px)}}
+.hero-r .rules{position:absolute;left:32px;bottom:26px;z-index:2}
+.hero-r .rules div{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--white);
+  text-transform:uppercase;margin-bottom:7px}
 
-  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
-  .reveal.in{opacity:1;transform:none}
+/* ---------- BANDEAU ---------- */
+.strip{display:flex;border-bottom:var(--bd);background:var(--paper);overflow-x:auto;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.strip .cell{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;
+  padding:16px 24px;border-right:var(--bd);white-space:nowrap;transition:background .4s var(--ease)}
+.strip .cell:last-child{border-right:0;flex:1}
+.strip .cell.on{background:var(--yellow)}
 
-  .shots{display:flex;gap:22px;justify-content:center;align-items:flex-end;flex-wrap:wrap;padding:40px 0 20px}
-  .shot{width:min(260px,72vw);border-radius:30px;overflow:hidden;border:1px solid rgba(255,255,255,.1);
-    box-shadow:0 30px 70px rgba(0,0,0,.5)}
-  .shot.mid{transform:translateY(-22px)}
-  @media(max-width:720px){.shot.mid{transform:none}}
+/* ---------- SECTIONS ---------- */
+section{padding:60px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:32px}
+.sec-head .note{font-family:var(--mono);font-size:12px;color:#3a3a3a;letter-spacing:.04em}
+h2{font-size:clamp(28px,4.2vw,50px);font-weight:900;line-height:.98;letter-spacing:-.03em}
+.lead{font-size:16px;line-height:1.55;color:#3a3a3a;max-width:56ch;margin-top:12px}
 
-  .sec{padding:56px 0}
-  .eyebrow{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:#6fd7a1;text-align:center}
-  .h2{font-size:clamp(24px,4.5vw,38px);font-weight:800;text-align:center;margin:10px 0 40px;letter-spacing:-1px}
-  .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
-  .feat{padding:24px;border-radius:18px;background:var(--glass);border:1px solid var(--glass-bd);backdrop-filter:blur(12px)}
-  .feat .ic{font-size:28px;margin-bottom:12px}
-  .feat h3{font-size:17px;margin-bottom:7px}
-  .feat p{font-size:14px;color:var(--muted)}
+/* ---------- CAPTURES ---------- */
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;
+  background:var(--ink);border:var(--bd)}
+.shots figure{background:var(--paper-2);padding:26px;display:flex;flex-direction:column;gap:16px;align-items:center}
+.shots img{border:var(--bd);width:min(240px,100%);transition:transform .3s var(--ease)}
+.shots figure:hover img{transform:translate(-4px,-4px)}
+.shots figcaption{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#3a3a3a}
 
-  .how{max-width:720px;margin:0 auto;text-align:center;color:var(--muted);font-size:15.5px}
-  .how b{color:var(--ink)}
+/* ---------- TUILES ----------
+   minmax(320px) plafonne à 3 colonnes : les 6 tuiles remplissent
+   exactement 2 rangées, aucune case noire orpheline. */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2px;
+  background:var(--ink);border:var(--bd)}
+.tile{background:var(--paper);padding:26px;position:relative;
+  transition:background .25s var(--ease),color .25s var(--ease)}
+.tile::before{content:"";position:absolute;left:0;top:0;height:100%;width:6px;background:var(--accent,var(--blue));
+  transform:scaleY(0);transform-origin:bottom;transition:transform .3s var(--ease)}
+.tile:hover::before{transform:scaleY(1)}
+.tile:hover{background:var(--ink);color:var(--paper)}
+.tile .ic{font-size:24px;margin-bottom:14px;display:block}
+.tile h3{font-size:17px;font-weight:800;letter-spacing:-.02em;margin-bottom:7px}
+.tile p{font-size:14px;line-height:1.5;color:#3a3a3a;transition:color .25s}
+.tile:hover p{color:#c9c9c9}
 
-  footer{padding:50px 0;border-top:1px solid rgba(255,255,255,.07);text-align:center;color:var(--muted);font-size:14px;margin-top:30px}
-  .studio{font-weight:900;font-size:16px;background:linear-gradient(100deg,var(--afk),#baffd6);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .flinks{display:flex;gap:18px;justify-content:center;margin:14px 0}
-  .flinks a:hover{color:#fff}
+/* ---------- BLOC IDÉE ---------- */
+.idea{border:var(--bd);background:var(--yellow);padding:56px 32px;text-align:center;position:relative;overflow:hidden}
+.idea .sq1{position:absolute;top:-30px;left:-30px;width:110px;height:110px;background:var(--blue);
+  animation:rot 18s linear infinite}
+.idea .sq2{position:absolute;bottom:-36px;right:-20px;width:0;height:0;border-left:56px solid transparent;
+  border-right:56px solid transparent;border-bottom:92px solid var(--red);animation:bob 8s ease-in-out infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.idea h2,.idea p{position:relative;z-index:2}
+.idea p{margin:14px auto 0;max-width:62ch;font-size:16px;line-height:1.6;color:#2b2b2b}
+.idea b{font-weight:800}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--ink);color:var(--paper);padding:56px 0 50px;margin-top:10px}
+.foot-in{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap}
+footer h2{font-size:clamp(28px,3.6vw,40px)}
+footer .mail{display:inline-block;margin-top:12px;color:var(--yellow);font-family:var(--mono);font-size:14px;
+  border-bottom:2px solid transparent;transition:border-color .22s}
+footer .mail:hover{border-color:var(--yellow)}
+.foot-r{text-align:right;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:#8f8f8f;line-height:1.9}
+.foot-r a{transition:color .2s}.foot-r a:hover{color:var(--yellow)}
+
+/* ---------- RÉVÉLATION ----------
+   Amélioration progressive : l'état masqué n'existe que si JS est actif. */
+.js .rv{clip-path:inset(0 0 100% 0);transform:translateY(18px);
+  transition:clip-path .7s var(--ease),transform .7s var(--ease)}
+.js .rv.in{clip-path:inset(0 0 0 0);transform:none}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv{clip-path:none;transform:none}
+}
 </style>
 </head>
 <body>
-  <div class="bg"><div class="blob b1"></div><div class="blob b2"></div></div>
-  <div class="grid-bg"></div>
+<div class="frame">
 
-  <nav><div class="wrap nav-in">
-    <a class="back" href="https://sandrophoto.github.io/">← STUPIDS&nbsp;STUDIO</a>
-    <a class="nav-cta" href="https://sandrophoto.github.io/" target="_self">Toutes les apps</a>
-  </div></nav>
-
-  <header class="hero wrap">
-    <div class="appicon"><img src="icon.png" alt="Icône AFK Pro Plus 3000"></div>
-    <h1>AFK <span class="grad">Pro Plus 3000</span></h1>
-    <p class="sub">Pose ton téléphone. Quand tu le reprends, il te dit combien de temps tu étais <b>dans la vraie vie</b> — et te récompense. La nuit ne compte pas.</p>
-    <div class="badge">🍏 Bientôt sur l'App Store</div>
-    <div class="chips">
-      <span class="chip">iPhone · iOS 17+</span>
-      <span class="chip">Temps d'écran</span>
-      <span class="chip">Français · English · Slovenščina</span>
-      <span class="chip">Aucune donnée collectée</span>
+  <nav>
+    <div class="wrap nav-in">
+      <a class="logo" href="https://sandrophoto.github.io/" aria-label="STUPIDS STUDIO">
+        <span class="sq">1a</span><span class="ci"></span><span class="tr"></span><span class="rc"></span>
+        <span class="name">← Stupids Studio</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Ce que ça fait</a>
+        <a href="#how">Comment</a>
+        <a class="btn" href="https://sandrophoto.github.io/">Toutes les apps <span class="ar">→</span></a>
+      </div>
     </div>
-  </header>
+  </nav>
 
-  <section class="shots wrap">
-    <img class="shot reveal" src="rewards.png" alt="Collection de récompenses" loading="lazy">
-    <img class="shot mid reveal" src="celebration.png" alt="Célébration d'une récompense" loading="lazy">
-    <img class="shot reveal" src="home.png" alt="Écran principal" loading="lazy">
+  <div class="hero" id="top">
+    <div class="hero-l">
+      <p class="eyebrow" style="color:var(--blue)">IPHONE · IOS 17+ · TEMPS D'ÉCRAN</p>
+      <h1>AFK<br>Pro Plus 3000.</h1>
+      <p class="sub">Pose ton téléphone. Quand tu le reprends, il te dit combien de temps tu étais <strong>dans la vraie vie</strong> — et te récompense. La nuit ne compte pas.</p>
+      <div class="cta">
+        <span class="soon">🍏 Bientôt sur l'App Store</span>
+      </div>
+      <p class="ver">Français · English · Slovenščina — aucune donnée collectée</p>
+    </div>
+    <div class="hero-r">
+      <div class="circle"></div>
+      <div class="tri"></div>
+      <div class="icon"><img src="icon.png" alt="Icône AFK Pro Plus 3000"></div>
+      <div class="rules">
+        <div>01 / RÉCOMPENSER L'ABSENCE</div>
+        <div>02 / LA NUIT NE COMPTE PAS</div>
+        <div>03 / TOUT RESTE SUR L'IPHONE</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip" id="strip">
+    <div class="cell">IPHONE · IOS 17+</div>
+    <div class="cell">TEMPS D'ÉCRAN</div>
+    <div class="cell">FR · EN · SL</div>
+    <div class="cell">AUCUNE DONNÉE COLLECTÉE</div>
+    <div class="cell">SANS COMPTE</div>
+  </div>
+
+  <section class="wrap">
+    <div class="shots rv">
+      <figure><img src="rewards.png" alt="Collection de récompenses" loading="lazy"><figcaption>Les récompenses</figcaption></figure>
+      <figure><img src="celebration.png" alt="Célébration d'une récompense" loading="lazy"><figcaption>La célébration</figcaption></figure>
+      <figure><img src="home.png" alt="Écran principal" loading="lazy"><figcaption>L'écran principal</figcaption></figure>
+    </div>
   </section>
 
-  <section class="sec wrap">
-    <p class="eyebrow reveal">Ce que ça fait</p>
-    <h2 class="h2 reveal">Récompense l'absence, pas l'usage</h2>
-    <div class="feats">
-      <div class="feat reveal"><div class="ic">🏆</div><h3>Des récompenses à collectionner</h3><p>Dès 10 minutes : ✨ Étincelle, 🍃 Bouffée d'air, 🏆 Vraie Vie, 🌍 Explorateur, 👑 Légende AFK. Chacune avec sa célébration animée.</p></div>
-      <div class="feat reveal"><div class="ic">🔔</div><h3>Automatique</h3><p>Grâce à Temps d'écran, une notification arrive pile quand tu reprends ton téléphone après une vraie pause. Rien à ouvrir.</p></div>
-      <div class="feat reveal"><div class="ic">🌙</div><h3>La nuit ne compte pas</h3><p>Le sommeil n'est pas un exploit : les heures calmes sont exclues, et une pause qui traverse la nuit repart au matin.</p></div>
-      <div class="feat reveal"><div class="ic">📵</div><h3>Mode Table</h3><p>Pose le téléphone face contre la table : le décompte démarre tout seul, l'écran s'éteint, et s'arrête quand tu le relèves.</p></div>
-      <div class="feat reveal"><div class="ic">⏱️</div><h3>Widget en direct</h3><p>Sur l'écran verrouillé et l'accueil : « dans la vraie vie depuis 2 h 34 », qui tourne tout seul.</p></div>
-      <div class="feat reveal"><div class="ic">🔒</div><h3>100 % privé</h3><p>Aucune donnée collectée, aucun compte, aucun serveur. Tout reste sur ton iPhone.</p></div>
+  <section id="features" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow rv" style="color:var(--red)">CE QUE ÇA FAIT</p>
+        <h2 class="rv" style="margin-top:14px">Récompense l'absence,<br>pas l'usage.</h2>
+      </div>
+      <p class="note rv">Rien à ouvrir. Rien à configurer.</p>
+    </div>
+    <div class="tiles rv">
+      <div class="tile" style="--accent:var(--blue)"><span class="ic">🏆</span><h3>Des récompenses à collectionner</h3><p>Dès 10 minutes : ✨ Étincelle, 🍃 Bouffée d'air, 🏆 Vraie Vie, 🌍 Explorateur, 👑 Légende AFK. Chacune avec sa célébration animée.</p></div>
+      <div class="tile" style="--accent:var(--red)"><span class="ic">🔔</span><h3>Automatique</h3><p>Grâce à Temps d'écran, une notification arrive pile quand tu reprends ton téléphone après une vraie pause. Rien à ouvrir.</p></div>
+      <div class="tile" style="--accent:var(--yellow)"><span class="ic">🌙</span><h3>La nuit ne compte pas</h3><p>Le sommeil n'est pas un exploit : les heures calmes sont exclues, et une pause qui traverse la nuit repart au matin.</p></div>
+      <div class="tile" style="--accent:var(--blue)"><span class="ic">📵</span><h3>Mode Table</h3><p>Pose le téléphone face contre la table : le décompte démarre tout seul, l'écran s'éteint, et s'arrête quand tu le relèves.</p></div>
+      <div class="tile" style="--accent:var(--red)"><span class="ic">⏱️</span><h3>Widget en direct</h3><p>Sur l'écran verrouillé et l'accueil : « dans la vraie vie depuis 2 h 34 », qui tourne tout seul.</p></div>
+      <div class="tile" style="--accent:var(--yellow)"><span class="ic">🔒</span><h3>100 % privé</h3><p>Aucune donnée collectée, aucun compte, aucun serveur. Tout reste sur ton iPhone.</p></div>
     </div>
   </section>
 
-  <section class="sec wrap">
-    <p class="eyebrow reveal">Comment ça marche</p>
-    <h2 class="h2 reveal">Une idée simple</h2>
-    <p class="how reveal">Tu poses le téléphone et tu vis. Quand l'écran se rallume après une longue absence, AFK te <b>félicite</b> pour le temps passé loin des écrans — un petit rappel que la vraie vie continue pendant que le téléphone dort. <b>Super simple.</b></p>
+  <section id="how" class="wrap" style="padding-top:0">
+    <div class="idea rv">
+      <div class="sq1"></div>
+      <div class="sq2"></div>
+      <h2>Une idée simple.</h2>
+      <p>Tu poses le téléphone et tu vis. Quand l'écran se rallume après une longue absence, AFK te <b>félicite</b> pour le temps passé loin des écrans — un petit rappel que la vraie vie continue pendant que le téléphone dort. <b>Super simple.</b></p>
+    </div>
   </section>
 
-  <footer><div class="wrap">
-    <div class="studio">STUPIDS STUDIO</div>
-    <div class="flinks">
-      <a href="https://sandrophoto.github.io/">Toutes les apps</a>
-      <a href="https://github.com/sandrophoto" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://stupidstudio.eu" target="_blank" rel="noopener">stupidstudio.eu</a>
+  <footer>
+    <div class="wrap foot-in">
+      <div>
+        <h2>Dis bonjour.</h2>
+        <a class="mail" href="mailto:sandro@tigre.paris">sandro@tigre.paris</a>
+      </div>
+      <div class="foot-r">
+        <div><a href="https://sandrophoto.github.io/">TOUTES LES APPS</a> · <a href="https://github.com/sandrophoto" target="_blank" rel="noopener">GITHUB</a> · <a href="https://stupidstudio.eu" target="_blank" rel="noopener">STUPIDSTUDIO.EU</a></div>
+        <div>© 2026 STUPIDS STUDIO — Tous droits réservés.</div>
+        <div>PETITS LOGICIELS, GROSSES OPINIONS</div>
+      </div>
     </div>
-    <div>© 2026 STUPIDS STUDIO — Tous droits réservés.</div>
-  </div></footer>
+  </footer>
+
+</div>
 
 <script>
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
-  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3*70)+'ms';io.observe(el)});
+/* Révélation au scroll — volet net, en cascade.
+   Vérification directe au scroll/resize plutôt qu'IntersectionObserver :
+   une poignée d'éléments, c'est gratuit, et ça ne peut pas laisser la
+   page vide si l'observer ne se déclenche pas. */
+let rvs=[...document.querySelectorAll('.rv')];
+rvs.forEach((el,i)=>el.style.transitionDelay=(i%4*70)+'ms');
+function reveal(){
+  if(!rvs.length) return;
+  rvs=rvs.filter(el=>{
+    if(el.getBoundingClientRect().top > innerHeight-80) return true;
+    el.classList.add('in');return false;
+  });
+}
+addEventListener('scroll',reveal,{passive:true});
+addEventListener('resize',reveal);
+addEventListener('load',reveal);
+requestAnimationFrame(reveal);
+
+/* Bandeau : la cellule jaune se déplace de cellule en cellule */
+const cells=[...document.querySelectorAll('#strip .cell')];
+let ci=0;
+function tickStrip(){
+  cells.forEach(c=>c.classList.remove('on'));
+  cells[ci].classList.add('on');
+  ci=(ci+1)%cells.length;
+}
+tickStrip();
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches) setInterval(tickStrip,2200);
 </script>
 </body>
 </html>
