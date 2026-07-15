@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>STUPIDS STUDIO — apps macOS &amp; iOS</title>
 <meta name="description" content="STUPIDS STUDIO — deux personnes, une courte liste d'apps macOS et iOS qui font une chose, très bien.">
+<meta name="theme-color" content="#F2EFE6">
 <meta property="og:title" content="STUPIDS STUDIO">
 <meta property="og:description" content="Deux personnes. Une courte liste d'apps. Une liste bien plus longue de choses qu'on a refusé d'ajouter.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23F2EFE6'/%3E%3Crect x='8' y='8' width='40' height='40' fill='%23E8412A'/%3E%3Ccircle cx='72' cy='28' r='20' fill='%232340D4'/%3E%3Cpath d='M28 92 L48 56 L68 92 Z' fill='%23E8412A'/%3E%3Crect x='72' y='60' width='24' height='24' fill='%23F7C51E'/%3E%3C/svg%3E">
@@ -16,24 +17,22 @@
 :root{
   --paper:#F2EFE6;--paper-2:#E7E3D6;--ink:#121212;
   --blue:#2340D4;--red:#E8412A;--yellow:#F7C51E;--white:#fff;
-  --bd:2px solid var(--ink);
+  --app:#2340D4;--panel:#2340D4;
   --sans:"Archivo","Helvetica Neue",Helvetica,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--ink);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+/* v2 : plus de cadre de page. Le papier va bord à bord. */
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-/* pas d'overflow:hidden ici — ça casserait le position:sticky de la nav */
-.frame{background:var(--paper);margin:10px;border:var(--bd)}
 .wrap{max-width:1180px;margin:0 auto;padding:0 32px;width:100%}
 .eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.16em}
-.mono{font-family:var(--mono)}
 
-/* ---------- NAV ---------- */
-nav{border-bottom:var(--bd);background:var(--paper);position:sticky;top:0;z-index:60}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px}
+/* ---------- NAV — un filet, pas une boîte ---------- */
+nav{border-bottom:2px solid var(--ink);background:var(--paper);position:sticky;top:0;z-index:60}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
 .logo{display:flex;align-items:center;gap:6px}
 .logo .sq{width:22px;height:22px;background:var(--red);color:var(--white);font-family:var(--mono);
   font-size:10px;font-weight:700;display:grid;place-items:center}
@@ -41,135 +40,133 @@ nav{border-bottom:var(--bd);background:var(--paper);position:sticky;top:0;z-inde
 .logo .tr{width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:16px solid var(--red)}
 .logo .rc{width:18px;height:18px;background:var(--yellow)}
 .logo .name{margin-left:8px;font-weight:800;letter-spacing:-.02em;font-size:17px}
-.logo .sq,.logo .ci,.logo .tr,.logo .rc{transition:transform .35s var(--ease)}
+.logo .ci,.logo .tr,.logo .rc{transition:transform .35s var(--ease)}
 .logo:hover .ci{transform:translateY(-4px)}
 .logo:hover .tr{transform:rotate(-15deg)}
 .logo:hover .rc{transform:rotate(45deg)}
 .nav-links{display:none;gap:34px}
 @media(min-width:820px){.nav-links{display:flex}}
-.nav-links a{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;position:relative;padding:4px 0}
+.nav-links a{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;
+  position:relative;padding:4px 0}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--red);
   transition:width .28s var(--ease)}
 .nav-links a:hover::after{width:100%}
 
 /* ---------- HERO ---------- */
-.hero{display:grid;grid-template-columns:1fr;border-bottom:var(--bd)}
-@media(min-width:900px){.hero{grid-template-columns:1.15fr .85fr}}
-.hero-l{padding:64px 32px 56px;max-width:660px;margin-left:auto;width:100%}
-@media(min-width:900px){.hero-l{padding:74px 48px 70px}}
-.hero h1{font-size:clamp(44px,6.4vw,80px);font-weight:900;line-height:.96;letter-spacing:-.035em;margin:22px 0 0}
-.hero .sub{margin-top:26px;font-size:16px;line-height:1.55;max-width:42ch;color:#2b2b2b}
-.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+.hero{display:grid;grid-template-columns:1fr}
+@media(min-width:900px){.hero{grid-template-columns:1.1fr .9fr}}
+.hero-l{padding:70px 32px 66px;max-width:680px;margin-left:auto;width:100%}
+@media(min-width:900px){.hero-l{padding:86px 52px 80px}}
+.hero h1{font-size:clamp(44px,6.2vw,80px);font-weight:900;line-height:.96;letter-spacing:-.035em;margin:24px 0 0}
+.hero .sub{margin-top:26px;font-size:16.5px;line-height:1.55;max-width:42ch;color:#2b2b2b}
+.cta{display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin-top:36px}
+/* un seul bouton plein ; le secondaire est un lien souligné (zéro cadre) */
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;
-  text-transform:uppercase;letter-spacing:.1em;padding:14px 22px;border:var(--bd);
+  text-transform:uppercase;letter-spacing:.1em;padding:15px 24px;border:0;
   background:var(--ink);color:var(--paper);cursor:pointer;
   transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
 .btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--red)}
 .btn .ar{transition:transform .18s var(--ease)}
 .btn:hover .ar{transform:translateX(4px)}
-.btn.ghost{background:transparent;color:var(--ink)}
-.btn.ghost:hover{box-shadow:4px 4px 0 var(--blue)}
+.lnk{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;
+  text-transform:uppercase;letter-spacing:.1em;border-bottom:2px solid var(--ink);padding-bottom:3px;
+  transition:color .2s,border-color .2s}
+.lnk:hover{color:var(--blue);border-color:var(--blue)}
 
-.hero-r{background:var(--blue);position:relative;overflow:hidden;min-height:420px;border-left:var(--bd)}
-@media(max-width:899px){.hero-r{border-left:0;border-top:var(--bd);min-height:340px}}
-.hero-r .circle{position:absolute;top:-90px;right:-70px;width:290px;height:290px;border-radius:50%;
+/* panneau : aplat qui saigne, aucune bordure */
+.hero-r{background:var(--panel);position:relative;overflow:hidden;min-height:460px}
+@media(max-width:899px){.hero-r{min-height:330px}}
+.hero-r .circle{position:absolute;top:-96px;right:-70px;width:300px;height:300px;border-radius:50%;
   background:var(--yellow);animation:bob 9s ease-in-out infinite}
-.hero-r .tri{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:0;
-  border-left:70px solid transparent;border-right:70px solid transparent;border-bottom:118px solid var(--red);
+/* le translateX(-50%) doit vivre sur la règle de base, pas seulement dans les
+   keyframes : sinon prefers-reduced-motion coupe l'anim ET décentre le triangle */
+.hero-r .tri{position:absolute;bottom:0;left:50%;width:0;height:0;transform:translateX(-50%);
+  border-left:72px solid transparent;border-right:72px solid transparent;border-bottom:120px solid var(--red);
   animation:slide 11s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(22px)}}
-@keyframes slide{50%{transform:translateX(-50%) translateY(-16px)}}
-.hero-r .rules{position:absolute;left:0;bottom:26px;padding-left:32px;z-index:2}
+@keyframes bob{50%{transform:translateY(20px)}}
+@keyframes slide{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(-18px)}}
+.hero-r .rules{position:absolute;left:32px;bottom:28px;z-index:2}
 .hero-r .rules div{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--white);
   text-transform:uppercase;margin-bottom:7px}
+/* parallaxe au pointeur — la seule couche qui bouge, discrètement */
+.par{transition:transform .5s var(--ease)}
 
-/* ---------- STRIP ---------- */
-.strip{display:flex;border-bottom:var(--bd);background:var(--paper);overflow-x:auto;scrollbar-width:none}
-.strip::-webkit-scrollbar{display:none}
-.strip .cell{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;
-  padding:16px 24px;border-right:var(--bd);white-space:nowrap;transition:background .4s var(--ease)}
-.strip .cell:last-child{border-right:0;flex:1}
-.strip .cell.on{background:var(--yellow)}
+/* ---------- TICKER — aplat plein, plus de cellules bordées ---------- */
+.ticker{background:var(--ink);color:var(--paper);overflow:hidden;padding:15px 0}
+.ticker .track{display:flex;width:max-content;animation:scrollx 34s linear infinite}
+.ticker b{font-family:var(--mono);font-size:11px;font-weight:400;text-transform:uppercase;
+  letter-spacing:.14em;white-space:nowrap;display:flex;align-items:center;gap:38px;padding-right:38px}
+.ticker b::after{content:"";width:7px;height:7px;background:var(--yellow);flex:none}
+@keyframes scrollx{to{transform:translateX(-50%)}}
 
 /* ---------- SECTIONS ---------- */
-section{padding:64px 0}
-.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:34px}
-.sec-head .note{font-size:13px;color:#3a3a3a;font-family:var(--mono);letter-spacing:.04em}
+section{padding:74px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
+  border-top:2px solid var(--ink);padding-top:16px;margin-bottom:40px}
+.sec-head .note{font-family:var(--mono);font-size:12px;color:#3a3a3a;letter-spacing:.04em}
+h2{font-size:clamp(30px,4.4vw,54px);font-weight:900;line-height:.98;letter-spacing:-.03em}
 
-/* ---------- GRILLE APPS ---------- */
-.apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px;
-  border:var(--bd);background:var(--ink)}
-.app{background:var(--paper);padding:28px;position:relative;overflow:hidden;
-  transition:background .28s var(--ease),color .28s var(--ease)}
-.app::before{content:"";position:absolute;left:0;top:0;height:100%;width:6px;background:var(--accent,var(--blue));
-  transform:scaleY(0);transform-origin:bottom;transition:transform .3s var(--ease)}
-.app:hover::before{transform:scaleY(1)}
-.app:hover{background:var(--ink);color:var(--paper)}
+/* ---------- LES APPS ----------
+   Plus de grille à fond noir ni de filets : un filet en haut de chaque
+   carte, du blanc autour, et au survol la carte prend la couleur de SON app. */
+.apps{display:grid;grid-template-columns:1fr;gap:0 44px}
+@media(min-width:760px){.apps{grid-template-columns:1fr 1fr}}
+@media(min-width:1060px){.apps{grid-template-columns:1fr 1fr 1fr}}
+.app{display:block;padding:22px 20px 26px;border-top:2px solid var(--ink);position:relative;
+  transition:background .3s var(--ease),color .3s var(--ease),transform .3s var(--ease)}
+.app:hover{background:var(--ac-panel);color:var(--paper);transform:translateY(-4px)}
 .app-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-.app .ico{width:46px;height:46px;flex:none;border:var(--bd);background:var(--white);display:grid;place-items:center;
-  font-size:22px;overflow:hidden;transition:border-color .28s}
+.app .ico{width:44px;height:44px;flex:none;overflow:hidden;background:var(--white)}
 .app .ico img{width:100%;height:100%;object-fit:cover;display:block}
-.app:hover .ico{border-color:var(--paper)}
-.app .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);
-  transition:color .28s}
-.app:hover .k{color:var(--yellow)}
+.app .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ac);transition:color .3s}
+.app:hover .k{color:var(--white)}
 .app h3{font-size:18px;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-top:3px}
-.app p{font-size:14px;line-height:1.5;color:#3a3a3a;min-height:63px;transition:color .28s}
-.app:hover p{color:#c9c9c9}
-.app .go{display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-family:var(--mono);
-  font-size:11px;letter-spacing:.12em;text-transform:uppercase;border-bottom:2px solid var(--red);padding-bottom:3px}
+.app p{font-size:14px;line-height:1.5;color:#3a3a3a;min-height:63px;transition:color .3s}
+.app:hover p{color:#e6e6e6}
+/* la barre d'accent prend la couleur de l'app et se déploie au survol */
+.app .bar{height:4px;width:0;background:var(--ac);margin-top:16px;transition:width .35s var(--ease)}
+.app:hover .bar{width:52px;background:var(--white)}
+.app .go{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-family:var(--mono);
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase}
 .app .go .ar{transition:transform .2s var(--ease)}
 .app:hover .go .ar{transform:translateX(5px)}
-/* 12e cellule : évite une case vide (= fond noir) en fin de grille.
-   11 apps + celle-ci = 12, qui tombe juste sur 1, 2, 3 ou 4 colonnes. */
-.app.note{background:var(--yellow);display:flex;flex-direction:column;justify-content:flex-end}
-.app.note h3{font-size:22px;line-height:1.1}
-.app.note p{color:#3a3a3a;min-height:0;margin-top:8px}
-/* ce n'est pas un lien : pas d'inversion ni de liseré au survol */
-.app.note:hover{background:var(--yellow);color:var(--ink)}
-.app.note:hover p{color:#3a3a3a}
-.app.note::before{display:none}
 
 /* ---------- STUDIO ---------- */
-.studio{display:grid;grid-template-columns:1fr;gap:36px;border-top:var(--bd);padding-top:56px}
-@media(min-width:880px){.studio{grid-template-columns:.8fr 1.2fr;gap:60px}}
-.studio p{font-size:16px;line-height:1.62;color:#2b2b2b;margin-bottom:18px;max-width:60ch}
+.studio{display:grid;grid-template-columns:1fr;gap:36px}
+@media(min-width:880px){.studio{grid-template-columns:.75fr 1.25fr;gap:60px}}
+.studio p{font-size:16px;line-height:1.62;color:#2b2b2b;margin-bottom:18px;max-width:62ch}
 
-/* ---------- PRINCIPES ---------- */
-.princ{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:var(--ink);
-  border:var(--bd);margin-top:44px}
-.princ .p{background:var(--paper);padding:26px;transition:background .28s var(--ease),color .28s var(--ease)}
-.princ .p:hover{background:var(--yellow)}
-.princ .n{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--red);margin-bottom:12px}
-.princ h4{font-size:17px;font-weight:800;letter-spacing:-.02em;margin-bottom:7px}
-.princ p{font-size:13.5px;line-height:1.5;color:#3a3a3a}
+/* ---------- PRINCIPES — gros chiffres, aucune carte ---------- */
+.princ{display:grid;grid-template-columns:1fr;gap:38px 44px}
+@media(min-width:640px){.princ{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.princ{grid-template-columns:repeat(4,1fr)}}
+.princ .n{font-family:var(--mono);font-size:42px;font-weight:700;color:var(--red);line-height:1;margin-bottom:14px}
+.princ h4{font-size:18px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.princ p{font-size:14px;line-height:1.5;color:#3a3a3a}
 
-/* ---------- FOOTER ---------- */
-footer{background:var(--ink);color:var(--paper);padding:62px 0 54px;margin-top:10px}
+/* ---------- FOOTER — aplat encre ---------- */
+footer{background:var(--ink);color:var(--paper);padding:70px 0 58px}
 .foot-in{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap}
-footer h2{font-size:clamp(30px,4vw,44px);font-weight:900;letter-spacing:-.03em;line-height:1}
+footer h2{font-size:clamp(30px,4vw,46px)}
 footer .mail{display:inline-block;margin-top:12px;color:var(--yellow);font-family:var(--mono);font-size:14px;
-  letter-spacing:.02em;border-bottom:2px solid transparent;transition:border-color .22s}
+  border-bottom:2px solid transparent;transition:border-color .22s}
 footer .mail:hover{border-color:var(--yellow)}
 .foot-r{text-align:right;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:#8f8f8f;line-height:1.9}
 .foot-r a{transition:color .2s}.foot-r a:hover{color:var(--yellow)}
 
-/* ---------- REVEAL ----------
-   Amélioration progressive : l'état masqué n'existe que si JS est actif
-   (classe .js posée par un script inline dans <head>). Sans JS, tout
-   s'affiche normalement au lieu de rester invisible à jamais. */
+/* ---------- RÉVÉLATION ---------- */
 .js .rv{clip-path:inset(0 0 100% 0);transform:translateY(18px);
   transition:clip-path .7s var(--ease),transform .7s var(--ease)}
 .js .rv.in{clip-path:inset(0 0 0 0);transform:none}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .rv{clip-path:none;transform:none}
+  .js .rv{clip-path:none;transform:none}
 }
 </style>
 </head>
 <body>
-<div class="frame">
 
   <nav>
     <div class="wrap nav-in">
@@ -193,12 +190,12 @@ footer .mail:hover{border-color:var(--yellow)}
       <p class="sub">Deux personnes. Une courte liste d'apps. Une liste bien plus longue de choses qu'on a refusé d'ajouter.</p>
       <div class="cta">
         <a class="btn" href="#work">Voir les apps <span class="ar">→</span></a>
-        <a class="btn ghost" href="#studio">Qui on est</a>
+        <a class="lnk" href="#studio">Qui on est</a>
       </div>
     </div>
-    <div class="hero-r">
-      <div class="circle"></div>
-      <div class="tri"></div>
+    <div class="hero-r" id="panel">
+      <div class="circle par" data-d="14"></div>
+      <div class="tri par" data-d="22"></div>
       <div class="rules">
         <div>01 / EN FAIRE MOINS</div>
         <div>02 / L'EXPÉDIER</div>
@@ -207,12 +204,9 @@ footer .mail:hover{border-color:var(--yellow)}
     </div>
   </div>
 
-  <div class="strip" id="strip">
-    <div class="cell">SUR L'APPAREIL</div>
-    <div class="cell">GRATUIT</div>
-    <div class="cell">SANS COMPTE</div>
-    <div class="cell">SANS PRESSE</div>
-    <div class="cell">PETIT, EXPRÈS</div>
+  <!-- contenu de repli valide : le JS le remplace par la boucle dupliquée -->
+  <div class="ticker" aria-hidden="true">
+    <div class="track" id="track"><b>Sur l'appareil</b><b>Gratuit</b><b>Sans compte</b></div>
   </div>
 
   <section id="work" class="wrap">
@@ -220,32 +214,34 @@ footer .mail:hover{border-color:var(--yellow)}
       <p class="eyebrow rv" style="color:var(--red)">LES APPS</p>
       <p class="note rv">Onze apps. On n'est pas pressés.</p>
     </div>
-    <!-- la révélation porte sur la grille entière : sinon son fond noir
-         (qui dessine les filets de 2px) resterait visible sous les cartes clippées -->
-    <div class="apps rv" id="grid"></div>
+    <div class="apps" id="grid"></div>
   </section>
 
   <section id="studio" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <p class="eyebrow rv" style="color:var(--blue)">LE STUDIO</p>
+      <p class="note rv">Deux personnes, zéro réunion.</p>
+    </div>
     <div class="studio">
-      <div>
-        <p class="eyebrow rv" style="color:var(--blue);margin-bottom:16px">LE STUDIO</p>
-        <h2 class="rv">Deux.<br>Exprès.</h2>
-      </div>
+      <h2 class="rv">Deux.<br>Exprès.</h2>
       <div>
         <p class="rv">STUPIDS STUDIO, c'est deux personnes qui écrivent des apps macOS et iOS. Pas de levée de fonds, pas de feuille de route, pas de tableau de bord d'engagement. Une app sort quand elle est prête, et pas avant.</p>
         <p class="rv">Tout ce qu'on fabrique tourne sur ta machine. Pas de serveur, pas de compte à créer, pas de télémétrie. Les outils en ligne de commande dont les apps ont besoin — aria2, yt-dlp, ffmpeg — sont embarqués dans le bundle : tu télécharges, tu ouvres, ça marche. Les binaires sont universels et signés, et les mises à jour arrivent toutes seules via Sparkle.</p>
         <p class="rv">La partie la plus longue du travail, c'est de dire non. Chaque réglage qu'on n'ajoute pas est un réglage que tu n'auras pas à comprendre.</p>
       </div>
     </div>
+  </section>
 
-    <div id="principes">
-      <!-- révélation sur le conteneur, pas sur les .p : son fond noir dessine les filets -->
-      <div class="princ rv">
-        <div class="p"><div class="n">01</div><h4>En faire moins</h4><p>Une app fait une chose. Si elle en fait deux, c'est probablement deux apps.</p></div>
-        <div class="p"><div class="n">02</div><h4>L'expédier</h4><p>Une version qui existe bat une version parfaite qui n'existe pas.</p></div>
-        <div class="p"><div class="n">03</div><h4>Sur l'appareil</h4><p>Tes fichiers ne partent pas. Il n'y a nulle part où les envoyer.</p></div>
-        <div class="p"><div class="n">04</div><h4>Sans compte</h4><p>Aucune app ne demande d'e-mail. Aucune n'en a besoin.</p></div>
-      </div>
+  <section id="principes" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <p class="eyebrow rv" style="color:var(--red)">PRINCIPES</p>
+      <p class="note rv">Quatre. Ça suffit.</p>
+    </div>
+    <div class="princ">
+      <div class="rv"><div class="n">01</div><h4>En faire moins</h4><p>Une app fait une chose. Si elle en fait deux, c'est probablement deux apps.</p></div>
+      <div class="rv"><div class="n">02</div><h4>L'expédier</h4><p>Une version qui existe bat une version parfaite qui n'existe pas.</p></div>
+      <div class="rv"><div class="n">03</div><h4>Sur l'appareil</h4><p>Tes fichiers ne partent pas. Il n'y a nulle part où les envoyer.</p></div>
+      <div class="rv"><div class="n">04</div><h4>Sans compte</h4><p>Aucune app ne demande d'e-mail. Aucune n'en a besoin.</p></div>
     </div>
   </section>
 
@@ -263,43 +259,68 @@ footer .mail:hover{border-color:var(--yellow)}
     </div>
   </footer>
 
-</div>
-
 <script>
+/* Chaque app porte SA couleur (extraite de son icône) : accent + fond au survol. */
 const apps=[
-  {n:"AFK Pro Plus 3000",t:"iPhone · Bien-être",d:"Pose ton téléphone. Quand tu le reprends, il te dit combien de temps tu étais dans la vraie vie — et te récompense. La nuit ne compte pas.",u:"https://sandrophoto.github.io/afk-pro-plus-3000/",i:"https://sandrophoto.github.io/afk-pro-plus-3000/icon.png",e:"📵"},
-  {n:"Hey Buddy",t:"iPhone · Animaux",d:"Le carnet de santé de tes compagnons : vaccins, repas, balades GPS, poids, galerie et fiche partageable. 100% sur ton iPhone.",u:"https://sandrophoto.github.io/heybuddy/",i:"https://sandrophoto.github.io/heybuddy/icon.png",e:"🐾"},
-  {n:"IFEEL",t:"iPhone · Humeur",d:"Note ton humeur jour après jour. Calendrier d'émotions, météo, lune — 100% privé, sur ton iPhone.",u:"https://sandrophoto.github.io/ifeel/",i:"https://sandrophoto.github.io/ifeel/icon.png",e:"🙂"},
-  {n:"Torrent DL Pro Plus 3000",t:"macOS · Torrents",d:"Colle un magnet ou un .torrent — moteur aria2 embarqué, binaire universel.",u:"https://sandrophoto.github.io/torrentdl/",i:"https://sandrophoto.github.io/torrentdl/icon.png",e:"🧲"},
-  {n:"BlaBlaSpy Pro Plus 3000",t:"macOS · Réunions",d:"Enregistre, transcrit et résume tes réunions Teams, Meet et Zoom — en local, sans rien envoyer.",u:"https://sandrophoto.github.io/blablaspy/",i:"https://sandrophoto.github.io/blablaspy/icon.png",e:"🎙️"},
-  {n:"Video DL Pro Plus 3000",t:"macOS · YouTube",d:"Télécharge YouTube en vidéo ou MP3, converti en H.264. Tout est embarqué.",u:"https://sandrophoto.github.io/videodlproplus3000/",i:"https://sandrophoto.github.io/videodlproplus3000/icon.png",e:"🎬"},
-  {n:"Video Downloader Pro Plus 3000",t:"macOS · Vidéo",d:"Colle un lien, récupère la vidéo. Qualité maximale, H265 si nécessaire, audio seul et extraits — tout le reste est rangé.",u:"https://sandrophoto.github.io/video-downloader-pro-plus-3000/",i:"https://sandrophoto.github.io/video-downloader-pro-plus-3000/icon.png",e:"🏔️"},
-  {n:"Backup Zen Dodo Pro Plus 3000",t:"macOS · Automatisation",d:"Attend une condition — Time Machine, téléchargements, app, SwissTransfer — puis éteint ou endort le Mac.",u:"https://sandrophoto.github.io/backup-zen-dodo/",i:"https://sandrophoto.github.io/backup-zen-dodo/icon.png",e:"💤"},
-  {n:"FCPX vers Pro Tools",t:"macOS · Audio",d:"Convertit un FCPXML en AAF pour repasser le montage dans Pro Tools. Rôles, poignées, marqueurs.",u:"https://sandrophoto.github.io/fcpx-protools/",i:"https://sandrophoto.github.io/fcpx-protools/icon.png",e:"🎚️"},
-  {n:"PullTheTimer Pro Plus 3000",t:"macOS · Barre de menu",d:"Le minuteur de la barre de menu qu'on règle en le tirant vers le bas.",u:"https://sandrophoto.github.io/pullthetimer-pro-plus-3000/",i:"https://sandrophoto.github.io/pullthetimer-pro-plus-3000/icon.png",e:"⏲️"},
-  {n:"Palabre Pro Plus 3000",t:"macOS · Transcription",d:"Transcription et sous-titres, en local. Mises à jour automatiques.",u:"https://sandrophoto.github.io/palabre/",i:"https://sandrophoto.github.io/palabre/icon.png",e:"💬"}
+  {n:"AFK Pro Plus 3000",t:"iPhone · Bien-être",ac:"#108441",panel:"#108441",
+   d:"Pose ton téléphone. Quand tu le reprends, il te dit combien de temps tu étais dans la vraie vie — et te récompense. La nuit ne compte pas.",
+   u:"https://sandrophoto.github.io/afk-pro-plus-3000/",i:"https://sandrophoto.github.io/afk-pro-plus-3000/icon.png",e:"📵"},
+  {n:"Hey Buddy",t:"iPhone · Animaux",ac:"#CA613B",panel:"#B55431",
+   d:"Le carnet de santé de tes compagnons : vaccins, repas, balades GPS, poids, galerie et fiche partageable. 100% sur ton iPhone.",
+   u:"https://sandrophoto.github.io/heybuddy/",i:"https://sandrophoto.github.io/heybuddy/icon.png",e:"🐾"},
+  {n:"IFEEL",t:"iPhone · Humeur",ac:"#DB8630",panel:"#A9641D",
+   d:"Note ton humeur jour après jour. Calendrier d'émotions, météo, lune — 100% privé, sur ton iPhone.",
+   u:"https://sandrophoto.github.io/ifeel/",i:"https://sandrophoto.github.io/ifeel/icon.png",e:"🙂"},
+  {n:"Torrent DL Pro Plus 3000",t:"macOS · Torrents",ac:"#2758BF",panel:"#2758BF",
+   d:"Colle un magnet ou un .torrent — moteur aria2 embarqué, binaire universel.",
+   u:"https://sandrophoto.github.io/torrentdl/",i:"https://sandrophoto.github.io/torrentdl/icon.png",e:"🧲"},
+  {n:"BlaBlaSpy Pro Plus 3000",t:"macOS · Réunions",ac:"#5D41BB",panel:"#553BAA",
+   d:"Enregistre, transcrit et résume tes réunions Teams, Meet et Zoom — en local, sans rien envoyer.",
+   u:"https://sandrophoto.github.io/blablaspy/",i:"https://sandrophoto.github.io/blablaspy/icon.png",e:"🎙️"},
+  {n:"Video DL Pro Plus 3000",t:"macOS · YouTube",ac:"#CF1D34",panel:"#C91C33",
+   d:"Télécharge YouTube en vidéo ou MP3, converti en H.264. Tout est embarqué.",
+   u:"https://sandrophoto.github.io/videodlproplus3000/",i:"https://sandrophoto.github.io/videodlproplus3000/icon.png",e:"🎬"},
+  {n:"Video Downloader Pro Plus 3000",t:"macOS · Vidéo",ac:"#121212",panel:"#121212",
+   d:"Colle un lien, récupère la vidéo. Qualité maximale, H265 si nécessaire, audio seul et extraits — tout le reste est rangé.",
+   u:"https://sandrophoto.github.io/video-downloader-pro-plus-3000/",i:"https://sandrophoto.github.io/video-downloader-pro-plus-3000/icon.png",e:"🏔️"},
+  {n:"Backup Zen Dodo Pro Plus 3000",t:"macOS · Automatisation",ac:"#1E40D1",panel:"#1D3DC9",
+   d:"Attend une condition — Time Machine, téléchargements, app, SwissTransfer — puis éteint ou endort le Mac.",
+   u:"https://sandrophoto.github.io/backup-zen-dodo/",i:"https://sandrophoto.github.io/backup-zen-dodo/icon.png",e:"💤"},
+  {n:"FCPX vers Pro Tools",t:"macOS · Audio",ac:"#EB5F80",panel:"#CC1A44",
+   d:"Convertit un FCPXML en AAF pour repasser le montage dans Pro Tools. Rôles, poignées, marqueurs.",
+   u:"https://sandrophoto.github.io/fcpx-protools/",i:"https://sandrophoto.github.io/fcpx-protools/icon.png",e:"🎚️"},
+  {n:"PullTheTimer Pro Plus 3000",t:"macOS · Barre de menu",ac:"#3086FC",panel:"#0361E2",
+   d:"Le minuteur de la barre de menu qu'on règle en le tirant vers le bas.",
+   u:"https://sandrophoto.github.io/pullthetimer-pro-plus-3000/",i:"https://sandrophoto.github.io/pullthetimer-pro-plus-3000/icon.png",e:"⏲️"},
+  {n:"Palabre Pro Plus 3000",t:"macOS · Transcription",ac:"#45BC94",panel:"#2F8367",
+   d:"Transcription et sous-titres, en local. Mises à jour automatiques.",
+   u:"https://sandrophoto.github.io/palabre/",i:"https://sandrophoto.github.io/palabre/icon.png",e:"💬"}
 ];
-const acc=["var(--blue)","var(--red)","var(--yellow)"];
 const grid=document.getElementById('grid');
-apps.forEach((a,i)=>{
+apps.forEach(a=>{
   const el=document.createElement('a');
-  el.className='app';el.href=a.u;el.style.setProperty('--accent',acc[i%3]);
+  el.className='app';el.href=a.u;
+  el.style.setProperty('--ac',a.ac);
+  el.style.setProperty('--ac-panel',a.panel);
   el.innerHTML=`<div class="app-top">
       <div class="ico"><img src="${a.i}" alt="" onerror="this.parentNode.textContent='${a.e}'"></div>
       <div><div class="k">${a.t}</div><h3>${a.n}</h3></div>
     </div>
     <p>${a.d}</p>
+    <div class="bar"></div>
     <span class="go">Découvrir <span class="ar">→</span></span>`;
   grid.appendChild(el);
 });
-const note=document.createElement('div');
-note.className='app note';
-note.innerHTML=`<h3>Et c'est tout.</h3><p>Onze apps depuis le début. On n'est pas pressés.</p>`;
-grid.appendChild(note);
+
+/* Ticker : on duplique le contenu pour une boucle sans couture */
+const words=["Sur l'appareil","Gratuit","Sans compte","Sans pression","Petit, exprès",
+             "Universel","Mises à jour auto","Pas de télémétrie","Deux personnes"];
+const track=document.getElementById('track');
+track.innerHTML=words.map(w=>`<b>${w}</b>`).join('').repeat(2);
 
 /* Révélation au scroll — volet net, en cascade.
    Vérification directe au scroll/resize plutôt qu'IntersectionObserver :
-   une douzaine d'éléments, c'est gratuit, et ça ne peut pas laisser la
+   une poignée d'éléments, c'est gratuit, et ça ne peut pas laisser la
    page vide si l'observer ne se déclenche pas. */
 let rvs=[...document.querySelectorAll('.rv')];
 rvs.forEach((el,i)=>el.style.transitionDelay=(i%4*70)+'ms');
@@ -315,16 +336,23 @@ addEventListener('resize',reveal);
 addEventListener('load',reveal);
 requestAnimationFrame(reveal);
 
-/* Bandeau : la cellule jaune se déplace de cellule en cellule */
-const cells=[...document.querySelectorAll('#strip .cell')];
-let ci=1;
-function tickStrip(){
-  cells.forEach(c=>c.classList.remove('on'));
-  cells[ci].classList.add('on');
-  ci=(ci+1)%cells.length;
+/* Parallaxe : les formes suivent le pointeur, chacune à sa profondeur */
+const panel=document.getElementById('panel');
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  panel.addEventListener('pointermove',e=>{
+    const r=panel.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+    panel.querySelectorAll('.par').forEach(el=>{
+      const d=+el.dataset.d;
+      el.style.setProperty('--px',(x*d)+'px');
+      el.style.setProperty('--py',(y*d)+'px');
+      el.style.translate=`${x*d}px ${y*d}px`;
+    });
+  });
+  panel.addEventListener('pointerleave',()=>{
+    panel.querySelectorAll('.par').forEach(el=>el.style.translate='0px 0px');
+  });
 }
-tickStrip();
-if(!matchMedia('(prefers-reduced-motion:reduce)').matches) setInterval(tickStrip,2200);
 </script>
 </body>
 </html>
