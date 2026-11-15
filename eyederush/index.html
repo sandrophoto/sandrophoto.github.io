@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eye Derush — STUPIDS STUDIO</title>
 <meta name="description" content="Eye Derush : l'IA écoute et regarde vos rushs, puis retrouve chaque moment, par un mot ou par le sens. Bientôt sur le Mac App Store.">
-<meta name="theme-color" content="#141416">
+<meta name="theme-color" content="#F2EFE6">
 <meta property="og:title" content="Eye Derush">
 <meta property="og:description" content="Le plan exact, retrouvé dans vos rushs. Bientôt sur le Mac App Store.">
 <meta property="og:image" content="icon.png">
@@ -15,255 +15,203 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js')</script>
 <style>
-/* ============================================================
-   Eye Derush — style « Skeuomorphic Hardware »
-   L'app se présente comme une machine de salle de montage :
-   façades en alu brossé vissées, écran LCD ambré, moniteur,
-   touches physiques, LED, VU-mètre, patch bay, bouton REC.
-   Accent : la terre cuite de l'app (Theme.swift), #CA987F.
-   ============================================================ */
 :root{
-  --rack:#141416; --rack-2:#1c1c1f;
-  --engrave:#45484d; --engrave-hi:rgba(255,255,255,.78);
-  --lcd:#ffb347; --lcd-dim:#7a5523; --lcd-bg:#170f05;
-  --app:#CA987F; --panel:#986347;
-  --yellow:#F7C51E; --red:#E8412A; --blue:#2340D4;
+  --paper:#F2EFE6;--paper-2:#E7E3D6;--ink:#121212;
+  --red:#E8412A;--yellow:#F7C51E;--blue:#2340D4;--white:#fff;
+  /* couleur de CETTE app, extraite de son icône : le marine du fond,
+     le cyan de l'œil (assombri pour rester lisible sur le papier) */
+  --app:#027BA6;--panel:#1E2332;--neon:#6AD6FD;
   --sans:"Archivo","Helvetica Neue",Helvetica,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background-color:var(--rack);color:#d9dadc;font-family:var(--sans);-webkit-font-smoothing:antialiased;
-  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.014) 0 1px,transparent 1px 3px);}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-.wrap{max-width:1160px;margin:0 auto;padding:0 28px;width:100%}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px;width:100%}
+.eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--app)}
 
-/* ---------- les briques matérielles ---------- */
-/* Façade en aluminium brossé */
-.unit{position:relative;border-radius:12px;padding:34px 34px 30px;color:#2c2e31;
-  background:
-    repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,rgba(0,0,0,.035) 1px 2px,transparent 2px 4px),
-    linear-gradient(180deg,#eceef0 0%,#cfd1d4 45%,#b3b5b8 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -3px 0 rgba(0,0,0,.18),
-             0 2px 0 #66696d,0 22px 48px rgba(0,0,0,.72)}
-/* les quatre vis, posées par le JS (décoratives) */
-.screw{position:absolute;width:12px;height:12px;border-radius:50%;
-  background:radial-gradient(circle at 35% 35%,#fafafa,#8a8d91 72%);
-  box-shadow:inset 0 -1px 1px rgba(0,0,0,.45),0 1px 0 rgba(255,255,255,.75)}
-.screw::after{content:"";position:absolute;left:2px;right:2px;top:5px;height:2px;border-radius:1px;
-  background:#56595d;transform:rotate(var(--r,35deg))}
-.screw.tl{top:11px;left:11px} .screw.tr{top:11px;right:11px;--r:-20deg}
-.screw.bl{bottom:11px;left:11px;--r:70deg} .screw.br{bottom:11px;right:11px;--r:10deg}
-
-/* Texte gravé dans la façade */
-.engr{font-family:var(--sans);font-weight:800;text-transform:uppercase;letter-spacing:.16em;font-size:11px;
-  color:var(--engrave);text-shadow:0 1px 0 var(--engrave-hi)}
-.plate{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:22px}
-.plate h2,.plate h3{font-size:clamp(20px,2.4vw,28px);font-weight:900;letter-spacing:-.02em;color:#2a2c2f;
-  text-shadow:0 1px 0 rgba(255,255,255,.8)}
-
-/* LED */
-.led{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none;
-  background:radial-gradient(circle at 35% 35%,#dcffe0,#36d457 55%,#0d4a1a);
-  box-shadow:0 0 9px rgba(70,255,110,.85),inset 0 -1px 1px rgba(0,0,0,.4);transition:background .3s,box-shadow .3s}
-.led.amber{background:radial-gradient(circle at 35% 35%,#fff1d6,#ffb347 55%,#6b3d06);box-shadow:0 0 9px rgba(255,179,71,.9),inset 0 -1px 1px rgba(0,0,0,.4)}
-.led.red{background:radial-gradient(circle at 35% 35%,#ffd6d2,#ff3b30 55%,#5c0000);box-shadow:0 0 10px rgba(255,59,48,.9),inset 0 -1px 1px rgba(0,0,0,.4)}
-.led.blink{animation:blink 1.2s steps(2) infinite}
-@keyframes blink{50%{opacity:.25}}
-/* éteinte tant que le module n'est pas « sous tension » (révélation au scroll) */
-.js .pw:not(.on) .led{background:radial-gradient(circle at 35% 35%,#8a8d90,#3b3d40);box-shadow:inset 0 -1px 1px rgba(0,0,0,.4)}
-
-/* Écran LCD ambré, encastré */
-.lcd{position:relative;overflow:hidden;border-radius:7px;padding:14px 16px;background:linear-gradient(180deg,#1f150a,var(--lcd-bg));
-  font-family:var(--mono);color:var(--lcd);text-shadow:0 0 7px rgba(255,179,71,.55);
-  box-shadow:inset 0 3px 8px rgba(0,0,0,.9),inset 0 0 0 1px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.8)}
-.lcd::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(0deg,rgba(0,0,0,.2) 0 1px,transparent 1px 3px)}
-.lcd small{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--lcd-dim);text-shadow:none;margin-bottom:6px}
-
-/* Touches physiques */
-.key{font:800 11px/1.15 var(--sans);text-transform:uppercase;letter-spacing:.08em;color:#2c2e31;cursor:pointer;
-  padding:12px 10px;border:0;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  background:linear-gradient(180deg,#fbfbfc,#d3d5d8);
-  box-shadow:0 4px 0 #85888c,0 7px 10px rgba(0,0,0,.35),inset 0 1px 0 #fff;
-  transition:transform .08s,box-shadow .08s,background .2s}
-.key:hover{background:linear-gradient(180deg,#ffffff,#dcdee1)}
-.key:active,.key[aria-pressed="true"]{transform:translateY(4px);
-  box-shadow:0 0 0 #85888c,0 2px 3px rgba(0,0,0,.35),inset 0 2px 5px rgba(0,0,0,.2)}
-/* touche enfoncée = rétroéclairée en terre cuite */
-.key[aria-pressed="true"]{background:linear-gradient(180deg,#f1dccf,var(--app));color:#2a1a10}
-.key:focus-visible,.rec:focus-visible,.lcd-input:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
-
-/* ---------- NAV : bande anodisée noire ---------- */
-nav{position:sticky;top:0;z-index:60;background:linear-gradient(180deg,#232326,#111113);
-  border-bottom:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 6px 18px rgba(0,0,0,.5)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;gap:18px;height:64px}
+/* ---------- NAV — un filet, pas une boîte ---------- */
+nav{border-bottom:2px solid var(--ink);background:var(--paper);position:sticky;top:0;z-index:60}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
 .logo{display:flex;align-items:center;gap:6px;flex:none}
-.logo .sq{width:20px;height:20px;background:var(--red);color:#fff;font:700 9px var(--mono);display:grid;place-items:center}
-.logo .ci{width:16px;height:16px;border-radius:50%;background:var(--blue)}
-.logo .tr{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid var(--red)}
-.logo .rc{width:16px;height:16px;background:var(--yellow)}
-.logo .name{margin-left:8px;font-weight:800;font-size:14px;color:#c9cacc;letter-spacing:-.01em}
-.nav-mid{display:none;align-items:center;gap:10px}
-@media(min-width:760px){.nav-mid{display:flex}}
-.nav-mid .engr{color:#8e9095;text-shadow:0 -1px 0 #000}
-.nav-links{display:none;gap:26px}
-@media(min-width:980px){.nav-links{display:flex}}
-.nav-links a{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#a9abaf;transition:color .2s}
-.nav-links a:hover{color:var(--app)}
-nav .key{padding:9px 13px;font-size:10px}
+.logo .sq{width:22px;height:22px;background:var(--red);color:var(--white);font-family:var(--mono);
+  font-size:10px;font-weight:700;display:grid;place-items:center}
+.logo .ci{width:18px;height:18px;border-radius:50%;background:var(--blue)}
+.logo .tr{width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:16px solid var(--red)}
+.logo .rc{width:18px;height:18px;background:var(--yellow)}
+.logo .name{margin-left:8px;font-weight:800;letter-spacing:-.02em;font-size:16px;white-space:nowrap}
+.logo .ci,.logo .tr,.logo .rc{transition:transform .35s var(--ease)}
+.logo:hover .ci{transform:translateY(-4px)}
+.logo:hover .tr{transform:rotate(-15deg)}
+.logo:hover .rc{transform:rotate(45deg)}
+.nav-links{display:none;align-items:center;gap:30px}
+@media(min-width:900px){.nav-links{display:flex}}
+.nav-links a:not(.btn){font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;
+  position:relative;padding:4px 0}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--app);
+  transition:width .28s var(--ease)}
+.nav-links a:not(.btn):hover::after{width:100%}
+
+/* ---------- BOUTONS ---------- */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;
+  text-transform:uppercase;letter-spacing:.1em;padding:14px 22px;border:0;
+  background:var(--ink);color:var(--paper);cursor:pointer;white-space:nowrap;
+  transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--app)}
+.btn .ar{transition:transform .18s var(--ease)}
+.btn:hover .ar{transform:translateX(4px)}
+nav .btn{padding:11px 16px}
+.lnk{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;
+  text-transform:uppercase;letter-spacing:.1em;border-bottom:2px solid var(--ink);padding-bottom:3px;
+  transition:color .2s,border-color .2s}
+.lnk:hover{color:var(--app);border-color:var(--app)}
+.btn:focus-visible,.lnk:focus-visible,.chip:focus-visible,.signup input:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
 
 /* ---------- HERO ---------- */
-/* padding vertical seulement : .wrap garde la marge latérale */
-.hero{padding-top:64px;padding-bottom:70px}
-.hero-top{max-width:780px;margin-bottom:38px}
-.eyebrow{font:500 11px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--app);display:flex;align-items:center;gap:10px}
-.hero h1{font-size:clamp(40px,6vw,76px);font-weight:900;line-height:.98;letter-spacing:-.035em;color:#f1f1f2;margin:18px 0 0;
-  text-shadow:0 2px 0 #000}
-.hero .sub{margin-top:20px;font-size:17px;line-height:1.55;color:#a9abaf;max-width:52ch}
+.hero{display:grid;grid-template-columns:1fr}
+@media(min-width:900px){.hero{grid-template-columns:1.1fr .9fr}}
+.hero-l{padding:66px 32px 60px;max-width:680px;margin-left:auto;width:100%}
+@media(min-width:900px){.hero-l{padding:80px 52px 74px}}
+.hero h1{font-size:clamp(40px,5.4vw,74px);font-weight:900;line-height:.96;letter-spacing:-.035em;margin:24px 0 0}
+.hero .sub{margin-top:24px;font-size:16.5px;line-height:1.55;max-width:44ch;color:#2b2b2b}
+.cta{display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin-top:34px}
+.ver{margin-top:22px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5a5a5a}
 
-/* La machine : moniteur à gauche, pupitre de recherche à droite */
-.deck{display:grid;grid-template-columns:1fr;gap:28px;align-items:start}
-@media(min-width:920px){.deck{grid-template-columns:1.35fr 1fr}}
-.monitor{border-radius:14px;padding:14px 14px 34px;position:relative;
-  background:linear-gradient(180deg,#2c2d30,#151517);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 0 0 2px #0a0a0b,0 1px 0 rgba(255,255,255,.55)}
-.monitor .badge{position:absolute;left:18px;bottom:10px;font:700 9px var(--mono);letter-spacing:.2em;color:#76787c}
-.monitor .badge-r{left:auto;right:18px;display:flex;align-items:center;gap:7px}
-.screen{position:relative;aspect-ratio:16/9;border-radius:7px;overflow:hidden;background:#000;
-  box-shadow:inset 0 0 0 1px #000,0 0 0 1px rgba(255,255,255,.04)}
-.screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .4s var(--ease)}
-.screen img.out{opacity:0}
-.screen::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 1px,transparent 1px 3px),
-             radial-gradient(ellipse at center,transparent 58%,rgba(0,0,0,.55) 100%)}
-.burn{position:absolute;z-index:2;left:12px;top:10px;font:700 13px var(--mono);color:#fff;letter-spacing:.06em;
-  background:rgba(0,0,0,.5);padding:3px 8px;border-radius:3px;font-variant-numeric:tabular-nums}
-.burn-r{left:auto;right:12px;display:flex;align-items:center;gap:7px}
+/* panneau : aplat qui saigne, aucune bordure */
+.hero-r{background:var(--panel);position:relative;overflow:hidden;min-height:520px;display:grid;place-items:center}
+@media(max-width:899px){.hero-r{min-height:470px}}
+.hero-r .circle{position:absolute;top:-110px;right:-80px;width:290px;height:290px;border-radius:50%;
+  background:var(--yellow);animation:bob 9s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(20px)}}
+.par{transition:translate .5s var(--ease)}
 
-.console .lcd{margin-bottom:18px}
-.q-line{font-size:clamp(15px,1.6vw,18px);min-height:2.6em;line-height:1.3}
-.cursor{display:inline-block;width:.6em;height:1.05em;background:var(--lcd);vertical-align:-.15em;margin-left:2px;
-  box-shadow:0 0 7px rgba(255,179,71,.7);animation:blink 1s steps(2) infinite}
-.found{display:flex;justify-content:space-between;align-items:baseline}
-.found b{font-size:clamp(30px,3.6vw,44px);font-weight:700;letter-spacing:.02em;font-variant-numeric:tabular-nums}
-.keys{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 10px}
-@media(min-width:520px){.keys{grid-template-columns:repeat(3,1fr)}}
-.keys .key:last-child{grid-column:1/-1}
-.console .hint{margin-top:16px}
+/* ---------- EFFET SIGNATURE : la recherche dans les rushs ----------
+   Ce que fait l'app, en une image : une question, puis le plan trouvé et
+   son timecode. Les sept requêtes, leurs images et leurs timecodes sont
+   ceux de la page produit, tirés de nos propres rushs. */
+.find{position:relative;z-index:2;width:min(420px,86%);background:var(--ink);padding:16px}
+.find-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.find-head span{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8f8f8f}
+.find-head .dot{width:7px;height:7px;background:var(--neon);animation:blink 1.6s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+.q{font-family:var(--mono);font-size:14px;color:var(--paper);background:#242424;padding:11px 12px;min-height:42px}
+.q .cur{display:inline-block;width:8px;height:15px;background:var(--neon);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(2) infinite}
+.frame{position:relative;aspect-ratio:16/9;margin-top:10px;overflow:hidden;background:#000}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .35s var(--ease)}
+.frame img.out{opacity:0}
+.frame .tc{position:absolute;left:0;bottom:0;background:var(--neon);color:var(--ink);font-family:var(--mono);
+  font-size:11px;font-weight:700;letter-spacing:.08em;padding:5px 9px;font-variant-numeric:tabular-nums}
+.find-foot{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px}
+.find-foot span{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#8f8f8f}
+.find-foot b{font-family:var(--mono);font-size:24px;color:var(--neon);font-weight:700;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:12px}
+.chip{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+  border:0;padding:6px 8px;background:#242424;color:#c9c9c9;transition:background .2s,color .2s}
+.chip:hover{background:#333}
+.chip[aria-pressed="true"]{background:var(--neon);color:var(--ink)}
 
-.hero-cta{margin-top:34px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.hero-cta .note{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#8e9095}
+.hero-r .rules{position:absolute;left:32px;bottom:22px;z-index:2}
+.hero-r .rules div{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--white);
+  text-transform:uppercase;margin-bottom:7px}
+@media(max-width:620px){.hero-r .rules{display:none}}
+
+/* ---------- TICKER — aplat plein ---------- */
+.ticker{background:var(--ink);color:var(--paper);overflow:hidden;padding:15px 0}
+.ticker .track{display:flex;width:max-content;animation:scrollx 34s linear infinite}
+.ticker b{font-family:var(--mono);font-size:11px;font-weight:400;text-transform:uppercase;
+  letter-spacing:.14em;white-space:nowrap;display:flex;align-items:center;gap:38px;padding-right:38px}
+.ticker b::after{content:"";width:7px;height:7px;background:var(--neon);flex:none}
+@keyframes scrollx{to{transform:translateX(-50%)}}
 
 /* ---------- SECTIONS ---------- */
-section.wrap{padding-top:56px;padding-bottom:56px} /* section seul perdrait face à .wrap */
-.sec-title{font-size:clamp(28px,4vw,46px);font-weight:900;letter-spacing:-.03em;line-height:1;color:#f1f1f2;
-  margin-bottom:12px;text-shadow:0 2px 0 #000}
-.sec-lead{font-size:16px;line-height:1.55;color:#a9abaf;max-width:60ch;margin-bottom:30px}
-.eyebrow.sec{margin-bottom:14px}
+/* section.wrap : un sélecteur d'élément seul perdrait face au padding de .wrap */
+section.wrap{padding-top:74px;padding-bottom:74px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
+  border-top:2px solid var(--ink);padding-top:16px;margin-bottom:40px}
+.sec-head .note{font-family:var(--mono);font-size:12px;color:#3a3a3a;letter-spacing:.04em}
+h2{font-size:clamp(30px,4.4vw,54px);font-weight:900;line-height:.98;letter-spacing:-.03em}
+.lead{font-size:16px;line-height:1.55;color:#3a3a3a;max-width:58ch;margin-top:12px}
 
-/* Chercher : trois façons + la vraie capture de l'app */
-.ways{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:26px}
-@media(min-width:760px){.ways{grid-template-columns:repeat(3,1fr)}}
-.way{display:flex;gap:12px;align-items:flex-start}
-.way .led{margin-top:5px}
-.way h3{font-size:16px;font-weight:900;letter-spacing:-.01em;color:#2a2c2f;text-shadow:0 1px 0 rgba(255,255,255,.8);margin-bottom:4px}
-.way p{font-size:14px;line-height:1.5;color:#3d4044}
-.shot-mon{border-radius:12px;padding:12px;background:linear-gradient(180deg,#2c2d30,#151517);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 0 0 2px #0a0a0b}
-.shot-mon img{border-radius:5px;width:100%;height:auto}
-.shot-cap{margin-top:12px}
+/* ---------- L'APP — vraies captures ---------- */
+.shots{display:grid;grid-template-columns:1fr;gap:30px}
+@media(min-width:900px){.shots{grid-template-columns:1fr 1fr}}
+.shots figure{margin:0;position:relative}
+.shots .bg-sq{position:absolute;top:-14px;right:-14px;width:96px;height:96px;background:var(--neon);z-index:0;
+  animation:bob 10s ease-in-out infinite}
+.shots figure:nth-child(2) .bg-sq{background:var(--yellow)}
+.shots img{position:relative;z-index:1;width:100%;height:auto;transition:transform .3s var(--ease)}
+.shots figure:hover img{transform:translateY(-6px)}
+.shots figcaption{margin-top:14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:#3a3a3a;line-height:1.5}
 
-/* Modules : petites unités de rack */
-.modules{display:grid;grid-template-columns:1fr;gap:20px}
-@media(min-width:680px){.modules{grid-template-columns:1fr 1fr}}
-@media(min-width:1020px){.modules{grid-template-columns:repeat(3,1fr)}}
-.mod{padding:30px 26px 26px}
-.mod .plate{margin-bottom:12px}
-.mod h3{font-size:18px}
-.mod p{font-size:14px;line-height:1.55;color:#3d4044}
-.mod .big{font:700 34px var(--mono);color:var(--lcd);display:block;margin-bottom:2px;font-variant-numeric:tabular-nums}
+/* ---------- TUILES — un filet en haut, pas de boîte ---------- */
+.tiles{display:grid;grid-template-columns:1fr;gap:0 44px}
+@media(min-width:700px){.tiles{grid-template-columns:1fr 1fr}}
+@media(min-width:1040px){.tiles{grid-template-columns:repeat(3,1fr)}}
+.tile{padding:20px 0 28px;border-top:2px solid var(--ink)}
+.tile .ic{font-size:22px;display:block;margin-bottom:12px}
+.tile h3{font-size:17px;font-weight:800;letter-spacing:-.02em;margin-bottom:7px}
+.tile p{font-size:14px;line-height:1.5;color:#3a3a3a}
+.tile .bar{height:4px;width:0;background:var(--app);margin-top:14px;transition:width .35s var(--ease)}
+.tile:hover .bar{width:44px}
 
-/* Analyse : afficheurs + VU-mètre */
-.meters{display:grid;grid-template-columns:1fr;gap:16px;align-items:stretch}
-@media(min-width:880px){.meters{grid-template-columns:1fr 1fr 1fr 210px}}
-.meters .lcd{display:flex;flex-direction:column;justify-content:flex-end;min-height:118px}
-.meters .lcd b{font-size:clamp(32px,4vw,46px);font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
-.meters .lcd span{font-size:11px;color:#c98d3e;text-shadow:none;margin-top:8px;line-height:1.4}
-.vu{position:relative;min-height:118px;border-radius:7px;overflow:hidden;
-  background:radial-gradient(ellipse at 50% 120%,#fff6dc 0%,#f0dfb2 60%,#d9c48f 100%);
-  box-shadow:inset 0 3px 8px rgba(0,0,0,.55),inset 0 0 0 1px rgba(0,0,0,.5),0 1px 0 rgba(255,255,255,.8)}
-.vu .scale{position:absolute;left:50%;bottom:-62px;width:220px;height:220px;margin-left:-110px;border-radius:50%;
-  background:repeating-conic-gradient(from -50deg,#3a2e17 0 .6deg,transparent .6deg 6deg);
-  -webkit-mask:radial-gradient(circle,transparent 92px,#000 93px,#000 102px,transparent 103px);
-          mask:radial-gradient(circle,transparent 92px,#000 93px,#000 102px,transparent 103px);clip-path:polygon(0 0,100% 0,100% 50%,0 50%)}
-.vu .red-zone{position:absolute;left:50%;bottom:-62px;width:220px;height:220px;margin-left:-110px;border-radius:50%;
-  background:conic-gradient(from 25deg,#c0392b 0 25deg,transparent 25deg);
-  -webkit-mask:radial-gradient(circle,transparent 98px,#000 99px,#000 104px,transparent 105px);
-          mask:radial-gradient(circle,transparent 98px,#000 99px,#000 104px,transparent 105px)}
-.vu .needle{position:absolute;left:50%;bottom:10px;width:2px;height:96px;margin-left:-1px;background:#1a1a1a;
-  transform-origin:50% 100%;transform:rotate(var(--a,-38deg));transition:transform .18s ease-out}
-.vu .hub{position:absolute;left:50%;bottom:4px;width:16px;height:16px;margin-left:-8px;border-radius:50%;
-  background:radial-gradient(circle at 35% 35%,#777,#111)}
-.vu .lbl{position:absolute;left:0;right:0;top:12px;text-align:center;font:800 10px var(--sans);letter-spacing:.2em;color:#5b4b26}
-.measured{margin-top:18px}
+/* ---------- CHIFFRES — gros chiffres, aucune carte ---------- */
+.steps{display:grid;grid-template-columns:1fr;gap:34px 44px}
+@media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step .n{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--app);line-height:1;margin-bottom:12px;
+  font-variant-numeric:tabular-nums}
+.step h4{font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+.step p{font-size:13.5px;line-height:1.5;color:#3a3a3a}
+.measured{margin-top:34px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#5a5a5a}
 
-/* Montage : patch bay */
-.bay{display:grid;grid-template-columns:1fr;gap:22px}
-@media(min-width:760px){.bay{grid-template-columns:repeat(3,1fr)}}
-.port{display:flex;gap:16px;align-items:flex-start}
-.jack{width:46px;height:46px;border-radius:50%;flex:none;position:relative;
-  background:radial-gradient(circle,#050505 28%,#4d5054 30%,#d4d6d9 52%,#8a8d91 74%,#5c5f63 100%);
-  box-shadow:0 2px 0 rgba(255,255,255,.8),inset 0 1px 1px rgba(0,0,0,.4)}
-.jack .led{position:absolute;right:-4px;top:-4px;width:9px;height:9px}
-.port h3{font-size:16px;font-weight:900;color:#2a2c2f;text-shadow:0 1px 0 rgba(255,255,255,.8);margin-bottom:4px}
-.port p{font-size:14px;line-height:1.5;color:#3d4044}
+/* ---------- BLOC FINAL : être prévenu — un aplat ---------- */
+.slab{background:var(--panel);color:var(--paper);padding:76px 32px;position:relative;overflow:hidden}
+.slab .sq1{position:absolute;top:-40px;left:-30px;width:120px;height:120px;background:var(--neon);
+  animation:spin 20s linear infinite}
+.slab .tri2{position:absolute;bottom:-30px;right:-10px;width:0;height:0;border-left:58px solid transparent;
+  border-right:58px solid transparent;border-bottom:96px solid var(--yellow);opacity:.85;
+  animation:bob 8s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.slab .in{position:relative;z-index:2;max-width:640px;margin:0 auto;text-align:center}
+.slab .eyebrow{color:var(--neon)}
+.slab h2{margin-top:16px}
+.slab .lead{color:#c9c9c9;margin:14px auto 0}
+.signup{margin-top:30px}
+.signup label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:#c9c9c9;margin-bottom:10px}
+.signup .row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.signup input[type=email]{flex:1 1 260px;min-width:0;border:0;padding:15px 16px;background:var(--paper);color:var(--ink);
+  font-family:var(--mono);font-size:15px}
+.signup input[aria-invalid]{box-shadow:inset 0 0 0 3px var(--red)}
+.signup .btn{background:var(--neon);color:var(--ink)}
+.signup .btn:hover{box-shadow:4px 4px 0 var(--yellow)}
+.signup .btn[aria-busy="true"]{opacity:.6}
+.signup-help{margin-top:14px;font-size:13px;line-height:1.5;color:#c9c9c9;min-height:1.5em}
+.small{margin-top:26px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;line-height:1.7;color:#8f8f8f}
 
-/* ---------- ÊTRE PRÉVENU : le module REC ---------- */
-.rec-unit h2{font-size:clamp(24px,3.2vw,36px);font-weight:900;letter-spacing:-.025em;line-height:1.05;color:#2a2c2f;
-  text-shadow:0 1px 0 rgba(255,255,255,.8);max-width:22ch}
-.signup{margin-top:24px}
-.signup label{display:block;margin-bottom:10px}
-.signup-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-.lcd-input{flex:1 1 260px;min-width:0;border:0;border-radius:7px;padding:16px 16px;
-  font:500 17px var(--mono);color:var(--lcd);caret-color:var(--lcd);text-shadow:0 0 7px rgba(255,179,71,.45);
-  background:linear-gradient(180deg,#1f150a,var(--lcd-bg));
-  box-shadow:inset 0 3px 8px rgba(0,0,0,.9),inset 0 0 0 1px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.8)}
-.lcd-input::placeholder{color:var(--lcd-dim);text-shadow:none}
-.lcd-input[aria-invalid]{box-shadow:inset 0 3px 8px rgba(0,0,0,.9),inset 0 0 0 2px #ff3b30,0 1px 0 rgba(255,255,255,.8)}
-/* le gros bouton rouge rétroéclairé */
-.rec{border:0;cursor:pointer;border-radius:999px;padding:17px 28px;display:inline-flex;align-items:center;gap:10px;
-  font:800 13px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.4);
-  background:radial-gradient(circle at 40% 30%,#ff8a80,#e53935 45%,#8e0000);
-  box-shadow:0 5px 0 #5c0000,0 10px 20px rgba(0,0,0,.45),inset 0 2px 2px rgba(255,255,255,.45);
-  transition:transform .08s,box-shadow .08s,filter .2s}
-.rec:hover{filter:brightness(1.07)}
-.rec:active{transform:translateY(5px);box-shadow:0 0 0 #5c0000,0 3px 6px rgba(0,0,0,.4),inset 0 2px 4px rgba(0,0,0,.25)}
-.rec[aria-busy="true"]{filter:saturate(.6)}
-.rec .dot{width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff}
-.signup-help{margin-top:14px;font-size:13px;line-height:1.5;color:#3d4044;min-height:1.5em}
-.small-print{margin-top:22px;padding-top:16px;border-top:1px solid rgba(0,0,0,.14);box-shadow:0 1px 0 rgba(255,255,255,.6) inset;
-  font-size:13px;line-height:1.5;color:#4b4e53}
+/* ---------- FOOTER — aplat encre ---------- */
+footer{background:var(--ink);color:var(--paper);padding:66px 0 56px}
+.foot-in{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap}
+footer h2{font-size:clamp(28px,3.6vw,42px)}
+footer .mail{display:inline-block;margin-top:12px;color:var(--neon);font-family:var(--mono);font-size:14px;
+  border-bottom:2px solid transparent;transition:border-color .22s}
+footer .mail:hover{border-color:var(--neon)}
+.foot-r{text-align:right;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:#8f8f8f;line-height:1.9}
+.foot-r a{transition:color .2s}.foot-r a:hover{color:var(--neon)}
+.foot-r .tag{font-family:var(--sans);font-weight:900;font-size:17px;letter-spacing:-.02em;text-transform:none;
+  color:var(--yellow);margin-bottom:8px;line-height:1}
 
-/* ---------- FOOTER ---------- */
-footer{margin-top:40px;background:linear-gradient(180deg,#19191b,#0d0d0e);border-top:1px solid #000;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);padding:46px 0 40px}
-.foot-in{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
-.foot-l .tag{font-weight:900;font-size:26px;letter-spacing:-.02em;color:var(--yellow)}
-.foot-l p{margin-top:8px;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#77797d}
-.foot-r{text-align:right;font:500 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#8e9095;line-height:1.9}
-.foot-r a{transition:color .2s}.foot-r a:hover{color:var(--app)}
-
-/* ---------- MISE SOUS TENSION AU SCROLL ----------
-   Amélioration progressive : l'état « éteint » n'existe que si JS est actif. */
-.js .pw{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
-.js .pw.on{opacity:1;transform:none}
+/* ---------- RÉVÉLATION ---------- */
+.js .rv{clip-path:inset(0 0 100% 0);transform:translateY(18px);
+  transition:clip-path .7s var(--ease),transform .7s var(--ease)}
+.js .rv.in{clip-path:inset(0 0 0 0);transform:none}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .js .pw{opacity:1;transform:none}
-  html{scroll-behavior:auto}
+  .js .rv{clip-path:none;transform:none}
 }
 </style>
 </head>
@@ -273,159 +221,137 @@ footer{margin-top:40px;background:linear-gradient(180deg,#19191b,#0d0d0e);border
     <div class="wrap nav-in">
       <a class="logo" href="https://sandrophoto.github.io/" aria-label="STUPIDS STUDIO — toutes les apps">
         <span class="sq">1a</span><span class="ci"></span><span class="tr"></span><span class="rc"></span>
-        <span class="name">← Stupids Studio</span>
+        <span class="name">Eye Derush</span>
       </a>
-      <div class="nav-mid" aria-hidden="true"><span class="led blink"></span><span class="engr">Eye Derush · ED-1</span></div>
       <div class="nav-links">
-        <a href="#chercher">Chercher</a>
+        <a href="#app">L'app</a>
+        <a href="#features">Fonctions</a>
         <a href="#analyse">L'analyse</a>
-        <a href="#montage">Montage</a>
+        <a class="btn" href="#prevenu">Être prévenu <span class="ar">→</span></a>
       </div>
-      <a class="key" href="#prevenu">Être prévenu</a>
     </div>
   </nav>
 
-  <header class="hero wrap" id="top">
-    <div class="hero-top">
-      <p class="eyebrow"><span class="led amber blink"></span>MACOS · BIENTÔT SUR LE MAC APP STORE</p>
-      <h1>Le plan exact,<br>retrouvé dans vos rushs.</h1>
-      <p class="sub">L'IA d'Eye Derush écoute et regarde vos rushs, puis retrouve chaque moment — par un mot, ou par le sens.</p>
+  <div class="hero" id="top">
+    <div class="hero-l">
+      <p class="eyebrow">MACOS · BIENTÔT SUR LE MAC APP STORE</p>
+      <h1>Le plan exact,<br>retrouvé dans<br>vos rushs.</h1>
+      <p class="sub">L'IA d'Eye Derush écoute et regarde vos rushs, puis retrouve chaque moment — <strong>par un mot, ou par le sens</strong>. Chaque résultat s'ouvre à la seconde près.</p>
+      <div class="cta">
+        <a class="btn" href="#prevenu">Être prévenu de la sortie <span class="ar">→</span></a>
+        <a class="lnk" href="#app">Voir l'app</a>
+      </div>
+      <p class="ver">macOS · Final Cut Pro · DaVinci Resolve · Premiere Pro</p>
     </div>
 
-    <!-- La machine. Requêtes, images et timecodes : ceux de la page de l'app,
-         tirés de nos propres rushs. -->
-    <div class="unit deck pw" id="deck">
-      <div class="monitor">
-        <div class="screen">
+    <div class="hero-r" id="panel">
+      <div class="circle par" data-d="14"></div>
+      <!-- effet signature : une question, puis le plan trouvé et son timecode -->
+      <div class="find par" data-d="-8" aria-label="Exemple de recherche">
+        <div class="find-head"><span>Recherche · nos rushs</span><span class="dot"></span></div>
+        <div class="q" aria-live="polite"><span id="query">L'arc-en-ciel sur les crêtes ?</span><span class="cur" aria-hidden="true"></span></div>
+        <div class="frame">
           <img id="frame" src="img/rainbow.jpg" alt="Plan trouvé : l'arc-en-ciel sur les crêtes" width="1200" height="675">
-          <span class="burn" id="burn" aria-hidden="true">00:00:03:00</span>
-          <span class="burn burn-r" aria-hidden="true"><span class="led red blink"></span>PLAY</span>
+          <span class="tc" id="burn" aria-hidden="true">00:00:03:00</span>
         </div>
-        <span class="badge" aria-hidden="true">MONITOR · REC. 709</span>
-        <span class="badge badge-r" aria-hidden="true"><span class="led"></span>SIGNAL</span>
+        <div class="find-foot"><span>Trouvé à</span><b id="tc">0:03</b></div>
+        <div class="chips" role="group" aria-label="Essayer une recherche">
+          <button class="chip" type="button" aria-pressed="true"  data-img="rainbow" data-tc="0:03" data-q="L'arc-en-ciel sur les crêtes ?">Arc-en-ciel</button>
+          <button class="chip" type="button" aria-pressed="false" data-img="arch"    data-tc="0:07" data-q="La façade du refuge ?">Refuge</button>
+          <button class="chip" type="button" aria-pressed="false" data-img="pilot"   data-tc="0:36" data-q="Le pilote face aux montagnes ?">Pilote</button>
+          <button class="chip" type="button" aria-pressed="false" data-img="turbine" data-tc="0:48" data-q="L'éolienne à contre-jour ?">Éolienne</button>
+          <button class="chip" type="button" aria-pressed="false" data-img="eggs"    data-tc="0:17" data-q="Les coquilles d'œufs en cuisine ?">Œufs</button>
+          <button class="chip" type="button" aria-pressed="false" data-img="dusk"    data-tc="0:14" data-q="Le ciel rose du soir ?">Ciel du soir</button>
+          <button class="chip" type="button" aria-pressed="false" data-img="wall"    data-tc="0:09" data-q="Le refuge sous la grande paroi ?">Grande paroi</button>
+        </div>
       </div>
-
-      <div class="console">
-        <div class="plate"><span class="engr">Recherche</span><span class="led amber"></span></div>
-        <div class="lcd" aria-live="polite">
-          <small>Requête</small>
-          <div class="q-line"><span id="query">L'arc-en-ciel sur les crêtes ?</span><span class="cursor" aria-hidden="true"></span></div>
-        </div>
-        <div class="lcd">
-          <div class="found"><small>Trouvé à</small><b id="tc">0:03</b></div>
-        </div>
-        <div class="keys" role="group" aria-label="Essayer une recherche">
-          <button class="key" type="button" aria-pressed="true"  data-img="rainbow" data-tc="0:03" data-q="L'arc-en-ciel sur les crêtes ?">Arc-en-ciel</button>
-          <button class="key" type="button" aria-pressed="false" data-img="arch"    data-tc="0:07" data-q="La façade du refuge ?">Refuge</button>
-          <button class="key" type="button" aria-pressed="false" data-img="pilot"   data-tc="0:36" data-q="Le pilote face aux montagnes ?">Pilote</button>
-          <button class="key" type="button" aria-pressed="false" data-img="turbine" data-tc="0:48" data-q="L'éolienne à contre-jour ?">Éolienne</button>
-          <button class="key" type="button" aria-pressed="false" data-img="eggs"    data-tc="0:17" data-q="Les coquilles d'œufs en cuisine ?">Œufs</button>
-          <button class="key" type="button" aria-pressed="false" data-img="dusk"    data-tc="0:14" data-q="Le ciel rose du soir ?">Ciel du soir</button>
-          <button class="key" type="button" aria-pressed="false" data-img="wall"    data-tc="0:09" data-q="Le refuge sous la grande paroi ?">Grande paroi</button>
-        </div>
-        <p class="engr hint">Appuyez sur une touche</p>
+      <div class="rules">
+        <div>01 / PAR LES MOTS</div>
+        <div>02 / PAR LE SENS</div>
+        <div>03 / À LA SECONDE PRÈS</div>
       </div>
     </div>
+  </div>
 
-    <div class="hero-cta">
-      <a class="key" href="#prevenu"><span class="led red"></span>Être prévenu de la sortie</a>
-      <span class="note">Pas encore disponible · Mac App Store</span>
+  <div class="ticker" aria-hidden="true">
+    <div class="track" id="track"><b>Paroles et images</b><b>100+ langues</b><b>Hors ligne</b></div>
+  </div>
+
+  <section id="app" class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow rv">L'APP</p>
+      <p class="note rv">Paroles et images, dans les mêmes résultats.</p>
     </div>
-  </header>
-
-  <section id="chercher" class="wrap">
-    <p class="eyebrow sec"><span class="led amber"></span>CHERCHER</p>
-    <h2 class="sec-title">Paroles et images,<br>dans les mêmes résultats.</h2>
-    <p class="sec-lead">Une recherche propulsée par l'IA, qui comprend le contexte de chaque plan. Chaque résultat s'ouvre à la seconde près.</p>
-    <div class="unit pw">
-      <div class="ways">
-        <div class="way"><span class="led"></span><div><h3>Par les mots</h3><p>Dans la transcription et ses traductions, sans souci d'accents ni de majuscules.</p></div></div>
-        <div class="way"><span class="led"></span><div><h3>Par le sens</h3><p>L'IA retrouve un passage qui dit la même chose avec d'autres mots.</p></div></div>
-        <div class="way"><span class="led"></span><div><h3>Plus comme ça</h3><p>Un clic droit sur un résultat ramène les passages les plus proches.</p></div></div>
-      </div>
-      <div class="shot-mon">
-        <img src="img/app-recherche.webp" width="2560" height="1400" loading="lazy" alt="Eye Derush : la recherche « hélicoptère » montre ce qui est dit et ce qui est filmé">
-      </div>
-      <p class="engr shot-cap">L'app · Recherche « hélicoptère » : ce qui est dit, et ce qui est filmé</p>
+    <h2 class="rv" style="margin-bottom:14px">Cliquez une phrase,<br>le plan s'ouvre là.</h2>
+    <p class="lead rv" style="margin-bottom:44px">Une recherche propulsée par l'IA, qui comprend le contexte de chaque plan. La transcription suit la lecture, nomme qui parle, et se corrige ou se découpe en sections.</p>
+    <div class="shots rv">
+      <figure><div class="bg-sq"></div><img src="img/app-recherche.webp" width="2560" height="1400" loading="lazy" alt="Eye Derush : la recherche « hélicoptère » montre ce qui est dit et ce qui est filmé"><figcaption>Recherche « hélicoptère » : ce qui est dit, et ce qui est filmé</figcaption></figure>
+      <figure><div class="bg-sq"></div><img src="img/app-fiche.webp" width="2560" height="1400" loading="lazy" alt="Eye Derush : la fiche d'un plan, avec lecteur, sous-titres et transcription minutée"><figcaption>La fiche d'un plan : lecteur, sous-titres, transcription minutée</figcaption></figure>
     </div>
   </section>
 
-  <section class="wrap">
-    <p class="eyebrow sec"><span class="led amber"></span>LES MODULES</p>
-    <h2 class="sec-title">Tout ce qu'il faut<br>pour dérusher.</h2>
-    <div class="modules">
-      <div class="unit mod pw"><div class="plate"><h3>Plus de 100 langues</h3><span class="led"></span></div>
-        <span class="big">100+</span>
-        <p>Un rush en slovène, en japonais ou en portugais devient un texte qui se cherche, puis une traduction en français ou en anglais.</p></div>
-      <div class="unit mod pw"><div class="plate"><h3>Qui parle</h3><span class="led"></span></div>
-        <p>Chaque voix a son nom dans la transcription. Cliquez une phrase, le plan s'ouvre là.</p></div>
-      <div class="unit mod pw"><div class="plate"><h3>Log déjà étalonné</h3><span class="led"></span></div>
-        <p>Deux LUT l'une sur l'autre, appliquées à l'écran seulement : vos fichiers ne sont jamais modifiés. S-Log3, C-Log, V-Log, HLG…</p></div>
-      <div class="unit mod pw"><div class="plate"><h3>Hors ligne</h3><span class="led"></span></div>
-        <p>Le catalogue emporte une copie légère de chaque plan. Dérushez dans le train, en avion ou sur le canapé — laissez les disques au bureau.</p></div>
-      <div class="unit mod pw"><div class="plate"><h3>Un passage, pas tout</h3><span class="led"></span></div>
-        <p>Glissez sur une vignette pour tracer une section, puis classez-la d'une touche : vert pour garder, rouge pour écarter.</p></div>
-      <div class="unit mod pw"><div class="plate"><h3>Résumé &amp; thématiques</h3><span class="led"></span></div>
-        <p>Sur une sélection de plans, l'IA écrit ce qu'ils montrent et disent, puis repère les thématiques. Chacune devient un chutier d'un clic.</p></div>
+  <section id="features" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <p class="eyebrow rv">CE QUE FAIT EYE DERUSH</p>
+      <p class="note rv">Vos fichiers ne sont jamais modifiés, déplacés ni copiés.</p>
+    </div>
+    <h2 class="rv" style="margin-bottom:44px">Tout ce qu'il faut<br>pour dérusher.</h2>
+    <div class="tiles">
+      <div class="tile rv"><span class="ic">🔎</span><h3>Par les mots, par le sens</h3><p>Dans la transcription et ses traductions, sans souci d'accents. Ou un passage qui dit la même chose avec d'autres mots.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🌍</span><h3>Plus de 100 langues</h3><p>Un rush en slovène ou en japonais devient un texte qui se cherche, puis une traduction en français ou en anglais.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🎨</span><h3>Log déjà étalonné</h3><p>Deux LUT l'une sur l'autre, appliquées à l'écran seulement. S-Log3, C-Log, V-Log, HLG…</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🚆</span><h3>Hors ligne</h3><p>Le catalogue emporte une copie légère de chaque plan. Dérushez dans le train — laissez les disques au bureau.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">✂️</span><h3>Un passage, pas tout</h3><p>Glissez sur une vignette pour tracer une section, puis classez-la d'une touche : vert pour garder, rouge pour écarter.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🎬</span><h3>Puis tout part au montage</h3><p>Final Cut Pro, DaVinci Resolve ou Premiere Pro : le logiciel lit vos rushs là où ils sont.</p><div class="bar"></div></div>
     </div>
   </section>
 
-  <section id="analyse" class="wrap">
-    <p class="eyebrow sec"><span class="led amber"></span>L'ANALYSE</p>
-    <h2 class="sec-title">L'IA n'analyse<br>que ce qui compte.</h2>
-    <p class="sec-lead">Avant tout envoi, votre Mac repère chaque changement de plan et chaque parole. Moins d'images, moins de son : moins d'attente, moins d'heures comptées.</p>
-    <div class="unit pw">
-      <div class="plate"><span class="engr">Mesures · catalogue de test</span><span class="led"></span></div>
-      <div class="meters">
-        <div class="lcd"><small>Images décrites</small><b>13 449</b><span>sur 2,4 millions</span></div>
-        <div class="lcd"><small>Jamais envoyées</small><b>6 h</b><span>de silence, de musique et d'ambiance</span></div>
-        <div class="lcd"><small>Rien à transcrire</small><b>116</b><span>plans sans voix</span></div>
-        <div class="vu" aria-hidden="true"><span class="lbl">VU</span><span class="scale"></span><span class="red-zone"></span><span class="needle" id="needle"></span><span class="hub"></span></div>
-      </div>
-      <p class="engr measured">Mesuré sur notre propre catalogue : 2 173 plans, 27 heures de rushs en montagne</p>
+  <section id="analyse" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <p class="eyebrow rv">L'ANALYSE</p>
+      <p class="note rv">Moins d'images, moins de son : moins d'attente.</p>
     </div>
+    <h2 class="rv" style="margin-bottom:14px">L'IA n'analyse<br>que ce qui compte.</h2>
+    <p class="lead rv" style="margin-bottom:44px">Avant tout envoi, votre Mac repère chaque changement de plan et chaque parole. Un plan déjà analysé ne repart jamais deux fois.</p>
+    <div class="steps">
+      <div class="step rv"><div class="n">13 449</div><h4>Images décrites</h4><p>Sur 2,4 millions : une image nette par plan, plus une quand le plan bouge.</p></div>
+      <div class="step rv"><div class="n">6 h</div><h4>Jamais envoyées</h4><p>De silence, de musique et d'ambiance : seule la parole part à la transcription.</p></div>
+      <div class="step rv"><div class="n">116</div><h4>Plans sans voix</h4><p>Rien à transcrire : les pistes muettes sont écartées.</p></div>
+    </div>
+    <p class="measured rv">Mesuré sur notre propre catalogue : 2 173 plans, 27 heures de rushs en montagne.</p>
   </section>
 
-  <section id="montage" class="wrap">
-    <p class="eyebrow sec"><span class="led amber"></span>LE MONTAGE</p>
-    <h2 class="sec-title">Puis tout part<br>au montage.</h2>
-    <p class="sec-lead">Un moment, une section ou un chutier entier : le logiciel lit vos rushs là où ils sont.</p>
-    <div class="unit pw">
-      <div class="plate"><span class="engr">Sorties</span><span class="led"></span></div>
-      <div class="bay">
-        <div class="port"><span class="jack"><span class="led"></span></span><div><h3>Final Cut Pro</h3><p>Import direct dans la bibliothèque ouverte, ou fichier .fcpxml.</p></div></div>
-        <div class="port"><span class="jack"><span class="led"></span></span><div><h3>DaVinci Resolve</h3><p>Un chutier dans le Media Pool du projet ouvert.</p></div></div>
-        <div class="port"><span class="jack"><span class="led"></span></span><div><h3>Premiere Pro</h3><p>Un fichier .xml : chutiers, plans, et sections en sous-plans.</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="prevenu" class="wrap">
-    <div class="unit rec-unit pw">
-      <div class="plate"><span class="engr">Bientôt · Mac App Store</span><span class="led red blink"></span></div>
-      <h2>Soyez prévenu de sa sortie sur le Mac App Store.</h2>
-      <!-- Même formulaire que la page de l'app : FormSubmit, champ piège anti-robots. -->
+  <div class="slab" id="prevenu">
+    <div class="sq1"></div>
+    <div class="tri2"></div>
+    <div class="in">
+      <p class="eyebrow">BIENTÔT · MAC APP STORE</p>
+      <h2>Soyez prévenu de sa sortie.</h2>
+      <p class="lead">Eye Derush arrive sur le Mac App Store. Laissez votre adresse, on vous écrit le jour de la sortie.</p>
+      <!-- Même formulaire que la page produit : FormSubmit, champ piège anti-robots. -->
       <form class="signup" data-endpoint="https://formsubmit.co/ajax/ab19c9072e7dc18155cf9bcd71c43bbb" novalidate>
-        <label class="engr" for="email">Votre adresse email</label>
-        <div class="signup-row">
-          <input class="lcd-input" id="email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="vous@exemple.com" aria-describedby="email-help">
+        <label for="email">Votre adresse email</label>
+        <div class="row">
+          <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="vous@exemple.com" aria-describedby="email-help">
           <input type="text" name="_honey" tabindex="-1" autocomplete="off" hidden>
-          <button class="rec" type="submit"><span class="dot" aria-hidden="true"></span>Me prévenir</button>
+          <button class="btn" type="submit">Me prévenir <span class="ar">→</span></button>
         </div>
         <p class="signup-help" id="email-help" aria-live="polite">Votre adresse ne sert qu'aux nouvelles d'Eye Derush. Elle passe par le service FormSubmit.</p>
       </form>
-      <p class="small-print">L'analyse par l'IA se paie en crédits ou en abonnement, selon vos besoins. Sans analyse, l'app sert pour tout le reste. Prix annoncés à la sortie.</p>
+      <p class="small">L'analyse par l'IA se paie en crédits ou en abonnement, selon vos besoins. Sans analyse, l'app sert pour tout le reste. Prix annoncés à la sortie.</p>
     </div>
-  </section>
+  </div>
 
   <footer>
     <div class="wrap foot-in">
-      <div class="foot-l">
-        <div class="tag">Fink difrentt</div>
-        <p>Images : nos propres rushs, tournés en montagne</p>
+      <div>
+        <h2>Dis bonjour.</h2>
+        <a class="mail" href="https://sandrophoto.github.io/#studio">Le studio →</a>
       </div>
       <div class="foot-r">
+        <div class="tag">Fink difrentt</div>
         <div><a href="https://sandrophoto.github.io/">TOUTES LES APPS</a> · <a href="https://sandrophoto.github.io/#studio">LE STUDIO</a></div>
+        <div>IMAGES : NOS PROPRES RUSHS, TOURNÉS EN MONTAGNE</div>
         <div>© 2026 STUPIDS STUDIO</div>
         <div>PETITS LOGICIELS, GROSSES OPINIONS</div>
       </div>
@@ -433,112 +359,108 @@ footer{margin-top:40px;background:linear-gradient(180deg,#19191b,#0d0d0e);border
   </footer>
 
 <script>
-const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 
-/* Les vis de chaque façade (purement décoratives). */
-document.querySelectorAll('.unit').forEach(u =>
-  u.insertAdjacentHTML('afterbegin', '<i class="screw tl"></i><i class="screw tr"></i><i class="screw bl"></i><i class="screw br"></i>'));
+/* Ticker : dupliqué pour une boucle sans couture */
+const words=["Paroles et images","Par le sens","100+ langues","Qui parle","Log déjà étalonné",
+             "Hors ligne","Final Cut · Resolve · Premiere","Bientôt sur le Mac App Store"];
+document.getElementById('track').innerHTML=words.map(w=>`<b>${w}</b>`).join('').repeat(2);
 
-/* ---- La machine : une touche = une requête, son plan, son timecode ---- */
-const keys = [...document.querySelectorAll('.keys .key')];
-const frame = document.getElementById('frame');
-const qEl = document.getElementById('query');
-const tcEl = document.getElementById('tc');
-const burn = document.getElementById('burn');
-let typing = 0, playFrom = 0, playStart = 0, auto = !reduce;
-
-const pad = n => String(n).padStart(2, '0');
-function secs(tc) { const [m, s] = tc.split(':').map(Number); return m * 60 + s; }
-function select(key) {
-  keys.forEach(k => k.setAttribute('aria-pressed', String(k === key)));
-  const q = key.dataset.q;
-  tcEl.textContent = key.dataset.tc;
-  frame.classList.add('out');
-  setTimeout(() => {
-    frame.src = 'img/' + key.dataset.img + '.jpg';
-    frame.alt = 'Plan trouvé : ' + q.replace(/ \?$/, '').toLowerCase();
-    frame.classList.remove('out');
-  }, reduce ? 0 : 220);
-  playFrom = secs(key.dataset.tc); playStart = performance.now();
-  clearInterval(typing);
-  if (reduce) { qEl.textContent = q; return; }
-  let i = 0; qEl.textContent = '';
-  typing = setInterval(() => { qEl.textContent = q.slice(0, ++i); if (i >= q.length) clearInterval(typing); }, 38);
-}
-keys.forEach(k => k.addEventListener('click', () => { auto = false; select(k); }));
-
-/* Timecode incrusté : la lecture repart du moment trouvé, à 25 i/s. */
-function tick() {
-  const t = playFrom + (reduce ? 0 : (performance.now() - playStart) / 1000);
-  const f = Math.floor((t % 1) * 25), s = Math.floor(t);
-  burn.textContent = '00:' + pad(Math.floor(s / 60)) + ':' + pad(s % 60) + ':' + pad(f);
-  if (!reduce) requestAnimationFrame(tick);
-}
-playStart = performance.now(); playFrom = 3; tick();
-
-/* Démo automatique tant que personne n'a touché une touche. */
-if (auto) {
-  let i = 0;
-  setInterval(() => { if (!auto) return; i = (i + 1) % keys.length; select(keys[i]); }, 5200);
-}
-
-/* ---- VU-mètre : l'aiguille vit ---- */
-const needle = document.getElementById('needle');
-if (!reduce) {
-  let a = -20;
-  setInterval(() => {
-    a += (Math.random() - .45) * 22;
-    a = Math.max(-46, Math.min(40, a));
-    needle.style.setProperty('--a', a + 'deg');
-  }, 140);
-} else needle.style.setProperty('--a', '-6deg');
-
-/* ---- Mise sous tension au scroll ----
-   Vérification directe au scroll/resize plutôt qu'IntersectionObserver :
-   une poignée d'éléments, et la page ne peut pas rester éteinte. */
-let pws = [...document.querySelectorAll('.pw')];
-function powerOn() {
-  pws = pws.filter(el => {
-    if (el.getBoundingClientRect().top > innerHeight - 60) return true;
-    el.classList.add('on'); return false;
+/* Révélation au scroll — volet net, vérifiée au scroll/resize
+   (pas d'IntersectionObserver : la page ne peut pas rester vide). */
+let rvs=[...document.querySelectorAll('.rv')];
+rvs.forEach((el,i)=>el.style.transitionDelay=(i%4*70)+'ms');
+function reveal(){
+  if(!rvs.length) return;
+  rvs=rvs.filter(el=>{
+    if(el.getBoundingClientRect().top > innerHeight-80) return true;
+    el.classList.add('in');return false;
   });
 }
-addEventListener('scroll', powerOn, { passive: true });
-addEventListener('resize', powerOn);
-addEventListener('load', powerOn);
-requestAnimationFrame(powerOn);
+addEventListener('scroll',reveal,{passive:true});
+addEventListener('resize',reveal);
+addEventListener('load',reveal);
+requestAnimationFrame(reveal);
 
-/* ---- Être prévenu : même mécanique que la page de l'app (FormSubmit) ---- */
-const words = {
-  invalid: 'Cette adresse semble incomplète. Écrivez-la comme nom@exemple.com.',
-  sending: 'Envoi…',
-  done: mail => `C'est noté : les nouvelles iront à ${mail}.`,
-  failed: "L'envoi n'a pas abouti. Réessayez dans une minute.",
+/* ---- Effet signature : question → plan trouvé → timecode ---- */
+const chips=[...document.querySelectorAll('.chip')];
+const frame=document.getElementById('frame'), qEl=document.getElementById('query'),
+      tcEl=document.getElementById('tc'), burn=document.getElementById('burn');
+let typing=0, playFrom=3, playStart=performance.now(), auto=!reduce;
+const pad=n=>String(n).padStart(2,'0');
+const secs=tc=>{const [m,s]=tc.split(':').map(Number);return m*60+s};
+function select(c){
+  chips.forEach(k=>k.setAttribute('aria-pressed',String(k===c)));
+  const q=c.dataset.q;
+  tcEl.textContent=c.dataset.tc;
+  frame.classList.add('out');
+  setTimeout(()=>{
+    frame.src='img/'+c.dataset.img+'.jpg';
+    frame.alt='Plan trouvé : '+q.replace(/ \?$/,'').toLowerCase();
+    frame.classList.remove('out');
+  },reduce?0:220);
+  playFrom=secs(c.dataset.tc); playStart=performance.now();
+  clearInterval(typing);
+  if(reduce){qEl.textContent=q;return}
+  let i=0; qEl.textContent='';
+  typing=setInterval(()=>{qEl.textContent=q.slice(0,++i); if(i>=q.length) clearInterval(typing)},38);
+}
+chips.forEach(c=>c.addEventListener('click',()=>{auto=false;select(c)}));
+/* timecode incrusté : la lecture repart du moment trouvé, à 25 i/s */
+(function tick(){
+  const t=playFrom+(reduce?0:(performance.now()-playStart)/1000);
+  const s=Math.floor(t);
+  burn.textContent='00:'+pad(Math.floor(s/60))+':'+pad(s%60)+':'+pad(Math.floor((t%1)*25));
+  if(!reduce) requestAnimationFrame(tick);
+})();
+/* démo automatique tant que personne n'a choisi une recherche */
+if(auto){
+  let i=0;
+  setInterval(()=>{ if(!auto) return; i=(i+1)%chips.length; select(chips[i]); },5200);
+}
+
+/* Parallaxe : les formes suivent le pointeur, chacune à sa profondeur */
+const panel=document.getElementById('panel');
+if(!reduce){
+  panel.addEventListener('pointermove',e=>{
+    const r=panel.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+    panel.querySelectorAll('.par').forEach(el=>el.style.translate=`${x*(+el.dataset.d)}px ${y*(+el.dataset.d)}px`);
+  });
+  panel.addEventListener('pointerleave',()=>panel.querySelectorAll('.par').forEach(el=>el.style.translate='0px 0px'));
+}
+
+/* ---- Être prévenu : même mécanique que la page produit (FormSubmit) ---- */
+const msg={
+  invalid:'Cette adresse semble incomplète. Écrivez-la comme nom@exemple.com.',
+  sending:'Envoi…',
+  done:mail=>`C'est noté : les nouvelles iront à ${mail}.`,
+  failed:"L'envoi n'a pas abouti. Réessayez dans une minute.",
 };
-document.querySelectorAll('form[data-endpoint]').forEach(form => {
-  const input = form.querySelector('input[type="email"]'), help = form.querySelector('[aria-live]'), button = form.querySelector('button');
-  form.addEventListener('submit', event => {
+document.querySelectorAll('form[data-endpoint]').forEach(form=>{
+  const input=form.querySelector('input[type="email"]'), help=form.querySelector('[aria-live]'), button=form.querySelector('button');
+  form.addEventListener('submit',event=>{
     event.preventDefault();
-    const valid = input.checkValidity();
-    input.toggleAttribute('aria-invalid', !valid);
-    if (!valid) { help.textContent = words.invalid; input.focus(); return; }
-    if (form.querySelector('[name="_honey"]').value) return;   // un robot a rempli le champ caché
-    const mail = input.value.trim();
-    button.disabled = true; button.setAttribute('aria-busy', 'true');
-    help.textContent = words.sending;
-    fetch(form.dataset.endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ email: mail, page: 'studio-fr', _subject: 'Eye Derush : inscription aux nouvelles', _template: 'table', _captcha: 'false' }),
+    const valid=input.checkValidity();
+    input.toggleAttribute('aria-invalid',!valid);
+    if(!valid){help.textContent=msg.invalid;input.focus();return}
+    if(form.querySelector('[name="_honey"]').value) return;   // un robot a rempli le champ caché
+    const mail=input.value.trim();
+    button.disabled=true; button.setAttribute('aria-busy','true');
+    help.textContent=msg.sending;
+    fetch(form.dataset.endpoint,{
+      method:'POST',
+      headers:{'Content-Type':'application/json',Accept:'application/json'},
+      body:JSON.stringify({email:mail,page:'studio-fr',_subject:'Eye Derush : inscription aux nouvelles',_template:'table',_captcha:'false'}),
     })
-      .then(r => r.json())
-      .then(data => {
-        const ok = String(data.success) === 'true';
-        help.textContent = ok ? words.done(mail) : words.failed;
-        if (ok) form.reset();
+      .then(r=>r.json())
+      .then(data=>{
+        const ok=String(data.success)==='true';
+        help.textContent=ok?msg.done(mail):msg.failed;
+        if(ok) form.reset();
       })
-      .catch(() => { help.textContent = words.failed; })
-      .finally(() => { button.disabled = false; button.removeAttribute('aria-busy'); });
+      .catch(()=>{help.textContent=msg.failed})
+      .finally(()=>{button.disabled=false;button.removeAttribute('aria-busy')});
   });
 });
 </script>
