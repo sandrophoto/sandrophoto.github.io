@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eye Derush — STUPIDS STUDIO</title>
-<meta name="description" content="Eye Derush : l'IA écoute et regarde vos rushs, puis retrouve chaque moment, par un mot ou par le sens. Bientôt sur le Mac App Store.">
+<meta name="description" content="Eye Derush : tous vos tournages, une seule mémoire. L'IA écoute et regarde tous vos rushs ; vous retrouvez chaque moment, même disques débranchés. Bientôt sur le Mac App Store.">
 <meta name="theme-color" content="#F2EFE6">
 <meta property="og:title" content="Eye Derush">
-<meta property="og:description" content="Le plan exact, retrouvé dans vos rushs. Bientôt sur le Mac App Store.">
+<meta property="og:description" content="Tous vos tournages. Une seule mémoire. Bientôt sur le Mac App Store.">
 <meta property="og:image" content="icon.png">
 <link rel="icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -166,6 +166,41 @@ h2{font-size:clamp(30px,4.4vw,54px);font-weight:900;line-height:.98;letter-spaci
 .step h4{font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
 .step p{font-size:13.5px;line-height:1.5;color:#3a3a3a}
 .measured{margin-top:34px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#5a5a5a}
+.tiles.four{grid-template-columns:1fr}
+@media(min-width:700px){.tiles.four{grid-template-columns:1fr 1fr}}
+@media(min-width:1040px){.tiles.four{grid-template-columns:repeat(4,1fr)}}
+
+/* ---------- UNE CAPTURE, PLEINE LARGEUR ---------- */
+.fig{margin:44px 0 0;position:relative}
+.fig .bg-sq{position:absolute;top:-14px;right:-14px;width:96px;height:96px;background:var(--neon);z-index:0;
+  animation:bob 10s ease-in-out infinite}
+.fig img{position:relative;z-index:1;width:100%;height:auto}
+.fig figcaption{margin-top:14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:#3a3a3a;line-height:1.5}
+/* texte à gauche, capture portrait à droite */
+.split{display:grid;grid-template-columns:1fr;gap:44px;align-items:start}
+@media(min-width:900px){.split{grid-template-columns:1.25fr .75fr}}
+.split .fig{margin:0}
+.split .steps{grid-template-columns:1fr}
+
+/* ---------- TARIFS ---------- */
+.prices{display:grid;grid-template-columns:1fr;gap:34px 44px}
+@media(min-width:760px){.prices{grid-template-columns:1fr 1fr}}
+.price{border-top:2px solid var(--ink);padding-top:20px}
+.price .n{font-family:var(--mono);font-size:44px;font-weight:700;color:var(--app);line-height:1;margin:10px 0 8px}
+.price .n small{font-size:18px;color:#5a5a5a}
+.price h3{font-size:18px;font-weight:800;letter-spacing:-.02em}
+.price p{font-size:14px;line-height:1.5;color:#3a3a3a}
+.price ul{list-style:none;margin-top:6px}
+.price li{font-size:14px;line-height:1.5;color:#3a3a3a;padding:7px 0;border-bottom:1px solid #d6d1c3}
+.price li::before{content:"";display:inline-block;width:7px;height:7px;background:var(--app);margin-right:10px;vertical-align:1px}
+
+/* ---------- FORMATS : fiche technique ---------- */
+.specs{display:grid;grid-template-columns:1fr;gap:0 44px}
+@media(min-width:760px){.specs{grid-template-columns:1fr 1fr}}
+.specs div{border-top:2px solid var(--ink);padding:16px 0 22px}
+.specs dt{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--app);margin-bottom:8px}
+.specs dd{font-size:14.5px;line-height:1.55;color:#2b2b2b}
 
 /* ---------- BLOC FINAL : être prévenu — un aplat ---------- */
 .slab{background:var(--panel);color:var(--paper);padding:76px 32px;position:relative;overflow:hidden}
@@ -224,9 +259,9 @@ footer .mail:hover{border-color:var(--neon)}
         <span class="name">Eye Derush</span>
       </a>
       <div class="nav-links">
-        <a href="#app">L'app</a>
-        <a href="#features">Fonctions</a>
-        <a href="#analyse">L'analyse</a>
+        <a href="#memoire">La mémoire</a>
+        <a href="#app">Chercher</a>
+        <a href="#cout">Tarifs</a>
         <a class="btn" href="#prevenu">Être prévenu <span class="ar">→</span></a>
       </div>
     </div>
@@ -235,13 +270,13 @@ footer .mail:hover{border-color:var(--neon)}
   <div class="hero" id="top">
     <div class="hero-l">
       <p class="eyebrow">MACOS · BIENTÔT SUR LE MAC APP STORE</p>
-      <h1>Le plan exact,<br>retrouvé dans<br>vos rushs.</h1>
-      <p class="sub">L'IA d'Eye Derush écoute et regarde vos rushs, puis retrouve chaque moment — <strong>par un mot, ou par le sens</strong>. Chaque résultat s'ouvre à la seconde près.</p>
+      <h1>Tous vos<br>tournages.<br>Une seule<br>mémoire.</h1>
+      <p class="sub">L'IA d'Eye Derush écoute et regarde <strong>tous vos rushs</strong>. Vous retrouvez chaque moment, <strong>même disques débranchés</strong>.</p>
       <div class="cta">
         <a class="btn" href="#prevenu">Être prévenu de la sortie <span class="ar">→</span></a>
-        <a class="lnk" href="#app">Voir l'app</a>
+        <a class="lnk" href="#memoire">Une seule mémoire</a>
       </div>
-      <p class="ver">macOS · Final Cut Pro · DaVinci Resolve · Premiere Pro</p>
+      <p class="ver">macOS 26+ · Final Cut Pro · Premiere Pro · DaVinci Resolve</p>
     </div>
 
     <div class="hero-r" id="panel">
@@ -266,44 +301,119 @@ footer .mail:hover{border-color:var(--neon)}
         </div>
       </div>
       <div class="rules">
-        <div>01 / PAR LES MOTS</div>
-        <div>02 / PAR LE SENS</div>
-        <div>03 / À LA SECONDE PRÈS</div>
+        <div>01 / TOUS VOS TOURNAGES</div>
+        <div>02 / DISQUES DÉBRANCHÉS</div>
+        <div>03 / PLUS DE 100 LANGUES</div>
       </div>
     </div>
   </div>
 
   <div class="ticker" aria-hidden="true">
-    <div class="track" id="track"><b>Paroles et images</b><b>100+ langues</b><b>Hors ligne</b></div>
+    <div class="track" id="track"><b>Tous vos tournages</b><b>Une seule mémoire</b><b>Disques débranchés</b></div>
   </div>
 
-  <section id="app" class="wrap">
+  <section id="memoire" class="wrap">
     <div class="sec-head">
-      <p class="eyebrow rv">L'APP</p>
-      <p class="note rv">Paroles et images, dans les mêmes résultats.</p>
+      <p class="eyebrow rv">UNE SEULE MÉMOIRE</p>
+      <p class="note rv">Pas un catalogue par projet : un seul, pour toutes vos années.</p>
     </div>
-    <h2 class="rv" style="margin-bottom:14px">Cliquez une phrase,<br>le plan s'ouvre là.</h2>
-    <p class="lead rv" style="margin-bottom:44px">Une recherche propulsée par l'IA, qui comprend le contexte de chaque plan. La transcription suit la lecture, nomme qui parle, et se corrige ou se découpe en sections.</p>
-    <div class="shots rv">
+    <h2 class="rv" style="margin-bottom:44px">Votre logiciel de montage cherche dans un projet.<br>Eye Derush se souvient de tout.</h2>
+    <div class="tiles four">
+      <div class="tile rv"><span class="ic">🗂️</span><h3>Tous vos tournages</h3><p>Un seul catalogue pour toutes vos années de rushs, pas un par projet.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🔌</span><h3>Disques débranchés</h3><p>Cherchez et dérushez sans les disques, sur des aperçus légers.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🎬</span><h3>Trois logiciels de montage</h3><p>Final Cut Pro, Premiere Pro, DaVinci Resolve : votre dérush part où vous montez.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🌍</span><h3>Plus de 100 langues</h3><p>Transcrites, traduites, et cherchables dans la vôtre.</p><div class="bar"></div></div>
+    </div>
+  </section>
+
+  <section id="hors-ligne" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <p class="eyebrow rv">HORS LIGNE</p>
+      <p class="note rv">Laissez les disques au bureau.</p>
+    </div>
+    <h2 class="rv" style="margin-bottom:14px">Dérushez dans le train,<br>en avion ou sur le canapé.</h2>
+    <p class="lead rv" style="margin-bottom:44px">Le catalogue emporte une copie légère de chaque plan.</p>
+    <div class="steps">
+      <div class="step rv"><div class="n">01</div><h4>Sans les disques</h4><p>Lecture, survol, sections et classement se font sur les aperçus.</p></div>
+      <div class="step rv"><div class="n">02</div><h4>Sans connexion</h4><p>La recherche par les mots, les chutiers et les mots-clés restent sur votre Mac.</p></div>
+      <div class="step rv"><div class="n">03</div><h4>Léger à emporter</h4><p>Environ 0,5 Go par heure de rushs en 540p, 0,9 Go en 720p.</p></div>
+    </div>
+    <figure class="fig rv"><div class="bg-sq"></div><img src="img/app-previews.webp" width="2560" height="1400" loading="lazy" alt="Eye Derush avec l'interrupteur sur Aperçus : l'app lit la copie légère du catalogue"><figcaption>L'interrupteur sur Aperçus : l'app lit la copie légère du catalogue</figcaption></figure>
+  </section>
+
+  <section id="montage" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <p class="eyebrow rv">LE MONTAGE</p>
+      <p class="note rv">Le logiciel lit vos rushs là où ils sont.</p>
+    </div>
+    <div class="split">
+      <div>
+        <h2 class="rv" style="margin-bottom:14px">Puis tout part<br>au montage.</h2>
+        <p class="lead rv" style="margin-bottom:40px">Un moment, une section ou un chutier entier.</p>
+        <div class="steps">
+          <div class="step rv"><div class="n">01</div><h4>Final Cut Pro</h4><p>Import direct dans la bibliothèque ouverte, ou fichier .fcpxml.</p></div>
+          <div class="step rv"><div class="n">02</div><h4>DaVinci Resolve</h4><p>Un chutier dans le Media Pool du projet ouvert.</p></div>
+          <div class="step rv"><div class="n">03</div><h4>Premiere Pro</h4><p>Un fichier .xml : chutiers, plans, et sections en sous-plans.</p></div>
+        </div>
+      </div>
+      <figure class="fig rv"><div class="bg-sq"></div><img src="img/app-export.webp" width="1120" height="1560" loading="lazy" alt="Eye Derush : l'export d'un chutier, ce qui part, vers où et comment"><figcaption>L'export d'un chutier : ce qui part, vers où, et comment</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="langues" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <p class="eyebrow rv">100+ LANGUES</p>
+      <p class="note rv">Un mot français retrouve la phrase slovène qui le dit.</p>
+    </div>
+    <h2 class="rv" style="margin-bottom:14px">Transcrit dans plus<br>de 100 langues.</h2>
+    <p class="lead rv" style="margin-bottom:44px">Un rush en slovène, en japonais ou en portugais devient un texte qui se cherche, puis une traduction en français ou en anglais.</p>
+    <div class="tiles">
+      <div class="tile rv"><span class="ic">🗣️</span><h3>Qui parle</h3><p>Chaque voix a son nom dans la transcription.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">💬</span><h3>Sous-titres traduits</h3><p>Affichés sur le lecteur et envoyés au montage avec les plans.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🔎</span><h3>Traductions cherchables</h3><p>Un mot français retrouve la phrase slovène qui le dit.</p><div class="bar"></div></div>
+    </div>
+    <div class="shots rv" style="margin-top:44px">
+      <figure><div class="bg-sq"></div><img src="img/app-original.webp" width="2560" height="1400" loading="lazy" alt="Une transcription originale en slovène dans Eye Derush"><figcaption>L'original, en slovène</figcaption></figure>
+      <figure><div class="bg-sq"></div><img src="img/app-translation.webp" width="2560" height="1400" loading="lazy" alt="La même transcription traduite ligne par ligne"><figcaption>Sa traduction, ligne par ligne</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="app" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <p class="eyebrow rv">CHERCHER</p>
+      <p class="note rv">Chaque résultat s'ouvre à la seconde près.</p>
+    </div>
+    <h2 class="rv" style="margin-bottom:14px">Paroles et images,<br>dans les mêmes résultats.</h2>
+    <p class="lead rv" style="margin-bottom:44px">Une recherche propulsée par l'IA, qui comprend le contexte de chaque plan. Un filtre — date, caméra, cadreur, objectif — resserre la bibliothèque ou une recherche.</p>
+    <div class="tiles">
+      <div class="tile rv"><span class="ic">🔤</span><h3>Par les mots</h3><p>Dans la transcription et ses traductions, sans souci d'accents ni de majuscules.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🧠</span><h3>Par le sens</h3><p>L'IA retrouve un passage qui dit la même chose avec d'autres mots.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">➕</span><h3>Plus comme ça</h3><p>Un clic droit sur un résultat ramène les passages les plus proches.</p><div class="bar"></div></div>
+    </div>
+    <div class="shots rv" style="margin-top:44px">
       <figure><div class="bg-sq"></div><img src="img/app-recherche.webp" width="2560" height="1400" loading="lazy" alt="Eye Derush : la recherche « hélicoptère » montre ce qui est dit et ce qui est filmé"><figcaption>Recherche « hélicoptère » : ce qui est dit, et ce qui est filmé</figcaption></figure>
-      <figure><div class="bg-sq"></div><img src="img/app-fiche.webp" width="2560" height="1400" loading="lazy" alt="Eye Derush : la fiche d'un plan, avec lecteur, sous-titres et transcription minutée"><figcaption>La fiche d'un plan : lecteur, sous-titres, transcription minutée</figcaption></figure>
+      <figure><div class="bg-sq"></div><img src="img/app-fiche.webp" width="2560" height="1400" loading="lazy" alt="Eye Derush : la fiche d'un plan, avec lecteur, sous-titres et transcription minutée"><figcaption>Cliquez une phrase, le plan s'ouvre là : la fiche d'un plan</figcaption></figure>
     </div>
   </section>
 
   <section id="features" class="wrap" style="padding-top:0">
     <div class="sec-head">
-      <p class="eyebrow rv">CE QUE FAIT EYE DERUSH</p>
+      <p class="eyebrow rv">DÉRUSHER</p>
       <p class="note rv">Vos fichiers ne sont jamais modifiés, déplacés ni copiés.</p>
     </div>
     <h2 class="rv" style="margin-bottom:44px">Tout ce qu'il faut<br>pour dérusher.</h2>
     <div class="tiles">
-      <div class="tile rv"><span class="ic">🔎</span><h3>Par les mots, par le sens</h3><p>Dans la transcription et ses traductions, sans souci d'accents. Ou un passage qui dit la même chose avec d'autres mots.</p><div class="bar"></div></div>
-      <div class="tile rv"><span class="ic">🌍</span><h3>Plus de 100 langues</h3><p>Un rush en slovène ou en japonais devient un texte qui se cherche, puis une traduction en français ou en anglais.</p><div class="bar"></div></div>
-      <div class="tile rv"><span class="ic">🎨</span><h3>Log déjà étalonné</h3><p>Deux LUT l'une sur l'autre, appliquées à l'écran seulement. S-Log3, C-Log, V-Log, HLG…</p><div class="bar"></div></div>
-      <div class="tile rv"><span class="ic">🚆</span><h3>Hors ligne</h3><p>Le catalogue emporte une copie légère de chaque plan. Dérushez dans le train — laissez les disques au bureau.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">✏️</span><h3>Corrigez en deux gestes</h3><p>Double-clic sur une ligne, corrigez le mot, Entrée. L'app propose de le remplacer partout ailleurs, et la recherche suit.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🙂</span><h3>Chacun par son visage</h3><p>Vous donnez un nom une fois, l'app retrouve tous les plans où la personne apparaît — et donne son nom à sa voix. Sur votre Mac seulement.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">⭐</span><h3>Classez, rangez</h3><p>Une touche classe un plan ou un passage. Chutiers et mots-clés : un plan peut se ranger dans plusieurs à la fois.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">📍</span><h3>D'où vient un plan</h3><p>Son dossier et ses chutiers s'éclairent, et sa fiche donne caméra, objectif, date, cadreur et chemin complet.</p><div class="bar"></div></div>
       <div class="tile rv"><span class="ic">✂️</span><h3>Un passage, pas tout</h3><p>Glissez sur une vignette pour tracer une section, puis classez-la d'une touche : vert pour garder, rouge pour écarter.</p><div class="bar"></div></div>
-      <div class="tile rv"><span class="ic">🎬</span><h3>Puis tout part au montage</h3><p>Final Cut Pro, DaVinci Resolve ou Premiere Pro : le logiciel lit vos rushs là où ils sont.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🧾</span><h3>Résumé &amp; thématiques</h3><p>Sur une sélection de plans, l'IA écrit ce qu'ils montrent et disent, puis repère les thématiques. Chacune devient un chutier d'un clic.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🎛️</span><h3>Affichez ce qui sert</h3><p>Chaque information d'une vignette s'allume ou s'éteint d'un clic. Colonnes, barres, sous-titres et raccourcis se règlent.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🎨</span><h3>Log déjà étalonné</h3><p>Deux LUT l'une sur l'autre, à l'écran seulement. En Auto, la conversion de chaque caméra : S-Log3, C-Log, V-Log, HLG…</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">☀️</span><h3>Auto rattrape les extrêmes</h3><p>Un plan beaucoup trop clair ou trop sombre est ramené à mi-chemin. Exposition et température se règlent à la main.</p><div class="bar"></div></div>
     </div>
+    <figure class="fig rv"><div class="bg-sq"></div><img src="img/app-people.webp" width="2560" height="1400" loading="lazy" alt="Eye Derush : une personne choisie, les plans où elle apparaît"><figcaption>Slavica choisie : les plans où elle apparaît</figcaption></figure>
   </section>
 
   <section id="analyse" class="wrap" style="padding-top:0">
@@ -312,13 +422,43 @@ footer .mail:hover{border-color:var(--neon)}
       <p class="note rv">Moins d'images, moins de son : moins d'attente.</p>
     </div>
     <h2 class="rv" style="margin-bottom:14px">L'IA n'analyse<br>que ce qui compte.</h2>
-    <p class="lead rv" style="margin-bottom:44px">Avant tout envoi, votre Mac repère chaque changement de plan et chaque parole. Un plan déjà analysé ne repart jamais deux fois.</p>
+    <p class="lead rv" style="margin-bottom:44px">Avant tout envoi, votre Mac repère chaque changement de plan et chaque parole. Moins d'images, moins de son : moins d'attente, moins d'heures comptées.</p>
     <div class="steps">
-      <div class="step rv"><div class="n">13 449</div><h4>Images décrites</h4><p>Sur 2,4 millions : une image nette par plan, plus une quand le plan bouge.</p></div>
-      <div class="step rv"><div class="n">6 h</div><h4>Jamais envoyées</h4><p>De silence, de musique et d'ambiance : seule la parole part à la transcription.</p></div>
-      <div class="step rv"><div class="n">116</div><h4>Plans sans voix</h4><p>Rien à transcrire : les pistes muettes sont écartées.</p></div>
+      <div class="step rv"><div class="n">13 449</div><h4>Images décrites, sur 2,4 millions</h4><p>Une image nette par plan, plus une quand le plan bouge, et une par minute sur un plan fixe.</p></div>
+      <div class="step rv"><div class="n">6 h</div><h4>Jamais envoyées</h4><p>De silence, de musique et d'ambiance : les pistes muettes sont écartées, les autres mixées en une seule.</p></div>
+      <div class="step rv"><div class="n">116</div><h4>Plans sans voix</h4><p>Rien à transcrire. Et un plan déjà analysé ne repart pas, sauf si vous le demandez.</p></div>
     </div>
     <p class="measured rv">Mesuré sur notre propre catalogue : 2 173 plans, 27 heures de rushs en montagne.</p>
+  </section>
+
+  <section id="cout" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <p class="eyebrow rv">TARIFS</p>
+      <p class="note rv">Prix annoncés à la sortie.</p>
+    </div>
+    <h2 class="rv" style="margin-bottom:14px">Payez l'analyse<br>à votre façon.</h2>
+    <p class="lead rv" style="margin-bottom:44px">Crédits ou abonnement, selon vos besoins. Sans analyse, l'app sert pour tout le reste. Avant chaque analyse, l'app montre ce qu'elle va compter.</p>
+    <div class="prices">
+      <div class="price rv"><h3>Crédits</h3><div class="n">10 h</div><p>d'analyse ou plus, achetées seulement quand vous en avez besoin.</p></div>
+      <div class="price rv"><h3>Abonnement</h3><div class="n">1 h <small>/ mois</small></div><p>d'analyse ou plus, chaque mois, pour les tournages réguliers.</p></div>
+      <div class="price rv"><h3>Gratuit, avec ou sans analyse</h3>
+        <ul><li>Importer et pré-analyser</li><li>Reconnaître les visages</li><li>Classer et ranger</li><li>Exporter vers le montage</li></ul></div>
+      <div class="price rv"><h3>Compté en heures d'analyse</h3>
+        <ul><li>Transcription par l'IA</li><li>Description des images par l'IA</li><li>Recherche par le sens, par l'IA</li><li>Thématiques trouvées par l'IA</li></ul></div>
+    </div>
+  </section>
+
+  <section id="formats" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <p class="eyebrow rv">FORMATS</p>
+      <p class="note rv">Vos formats, vos profils log.</p>
+    </div>
+    <dl class="specs rv">
+      <div><dt>Vidéo</dt><dd>MOV, MP4, M4V, MXF, MKV, AVI, MTS, M2TS</dd></div>
+      <div><dt>Son seul</dt><dd>WAV, MP3, M4A, AIFF, FLAC, CAF</dd></div>
+      <div><dt>Profils log, affichés en Rec. 709</dt><dd>Sony S-Log2, S-Log3. Canon C-Log, C-Log2, C-Log3. Panasonic V-Log. Fujifilm F-Log, F-Log2. DJI D-Log. ARRI LogC3, LogC4. RED Log3G10. Apple Log. HLG.</dd></div>
+      <div><dt>Mac &amp; langues</dt><dd>macOS 26 ou plus récent. Interface en français et en anglais.</dd></div>
+    </dl>
   </section>
 
   <div class="slab" id="prevenu">
@@ -362,8 +502,8 @@ footer .mail:hover{border-color:var(--neon)}
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 
 /* Ticker : dupliqué pour une boucle sans couture */
-const words=["Paroles et images","Par le sens","100+ langues","Qui parle","Log déjà étalonné",
-             "Hors ligne","Final Cut · Resolve · Premiere","Bientôt sur le Mac App Store"];
+const words=["Tous vos tournages","Une seule mémoire","Disques débranchés","100+ langues",
+             "Par les mots, par le sens","Visages","Final Cut · Premiere · Resolve","Bientôt sur le Mac App Store"];
 document.getElementById('track').innerHTML=words.map(w=>`<b>${w}</b>`).join('').repeat(2);
 
 /* Révélation au scroll — volet net, vérifiée au scroll/resize
